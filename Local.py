@@ -19,7 +19,7 @@ def create_matrix(n,m):
         }
     }
     """
-    return [[0]*m for i in xrange(n)]
+    return [[0]*m for i in range(n)]
 
 def print_matrix(seq1, seq2, M):
     """
@@ -31,18 +31,19 @@ def print_matrix(seq1, seq2, M):
         C     0     0     0
     """
     # print the empty space
-    print "{:^5}".format(" "),
+    print ("{}".format(" "),end=" ")
     # print the top row
     for c in seq1:
-        print "{:^5}".format(c),
-    print
+        print (c,end=" ")
+    
+    print("",end="\n")
 
     # print the remaining
-    for j in xrange(len(M[0])):
-        print "{:>3}".format(seq2[j]),
-        for i in xrange(len(M)):
-            print "{:>5}".format(M[i][j]),
-        print
+    for j in range(len(M[0])):
+        print (seq2[j],end=" ")
+        for i in range(len(M)):
+            print (M[i][j], end=" ")
+        print("",end="\n")
 
 ####################
 #### PARAMETERS ####
@@ -52,7 +53,7 @@ class Parameters:
     def __init__(self, gap=-2,mismatch=-1,match=1):
         self.gap = gap
         self.mismatch = mismatch
-        self.match=1
+        self.match= match
 
     def score(self, a, b):
         assert len(a) == len(b) == 1 #assures that is just one letter
@@ -78,8 +79,8 @@ def local_align(seq1, seq2, Parameters=Parameters()):
     location = (0,0)
 
     # fill in A in the right order
-    for i in xrange(1, len(seq1)):
-        for j in xrange(1, len(seq2)):
+    for i in range(1, len(seq1)):
+        for j in range(1, len(seq2)):
 
             # the local alignment recurrance rule:
             M[i][j] = max(
@@ -94,12 +95,12 @@ def local_align(seq1, seq2, Parameters=Parameters()):
                 score = M[i][j]
                 location = (i,j)
 
-    print "Parameters\n{}".format(Parameters)
-    print "Score = {}".format(score)
-    print "Location in the matrix = {}".format(location)
+    print ("Parameters\n{}".format(str(Parameters)))
+    print ("Score = {}".format(score))
+    print ("Location in the matrix = {}".format(location))
     # just putting an * in the location
     M[location[0]][location[1]] = "*"+str(M[location[0]][location[1]])
-    print "Matrix ="
+    print ("Matrix =")
     print_matrix(seq1, seq2, M)
 
 
