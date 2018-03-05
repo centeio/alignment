@@ -21,23 +21,21 @@ def create_matrix(n,m):
 #### PARAMETERS ####
 ####################
 
+matrix_dict =   { 'BLOSUM62': BLOSUM62, 'DNAFULL': DNAFULL, 'PAM': PAM}
+
 class Parameters:
-    def __init__(self, gap=-2,mismatch=-1,match=1):
+    def __init__(self, gap=-2, matrix='BLOSUM62', stype='protein'):
         self.gap = gap
-        self.mismatch = mismatch
-        self.match=1
+        self.matrix = matrix_dict[matrix]
+        self.stype = stype
 
     def score(self, a, b):
         assert len(a) == len(b) == 1 #assures that is just one letter
-
-        if a==b:
-            return self.match
-        else:
-            return self.mismatch
+        return matrix[a][b]
 
     def __str__(self):
-        return "match = {}\nmismatch = {}\ngap = {}\n".format(
-            self.match, self.mismatch, self.gap
+        return "matrix = {}\nmatrix = {}\nstype = {}\ngap = {}\n".format(
+            self.matrix, self.stype, self.gap
             )
 
 ##########################
@@ -171,7 +169,7 @@ def print_matrix(seq1, seq2, M):
 
 if __name__ == '__main__':
     #Definicoes dos parametros
-    par = Parameters(gap=-2,mismatch=-1, match=1)
+    par = Parameters(gap=-2,matrix='BLOSUM62',stype='protein')
 
     #Sequencias
     #>tr|B7Z8R9|B7Z8R9_HUMAN cDNA FLJ57474, highly similar to Homo sapiens plasticity
