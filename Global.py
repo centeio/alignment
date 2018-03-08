@@ -64,7 +64,6 @@ def global_align(seq1, seq2, Parameters=Parameters()):
 
                 M[i][j] = max(vj, vi, vd)
 
-    print_matrix("_"+seq1,"_"+seq2,M)
 
     return M
 
@@ -108,10 +107,9 @@ def align(M,seq1,seq2,Parameters):
     i = len(seq1)
     j = len(seq2)
     
-    while i!=0 and j!=0:
-
-        #Primeira linha ou esquerda
-        if j==0 or (M[i][j] == M[i-1][j] + Parameters.gap):
+    while ((i is not 0) or (j is not 0)):
+        #Primeira linha
+        if j==0:
             alignedseq2 = alignedseq2 + "-"
             alignedseq1 = alignedseq1 + seq1[i-1]
             i = i-1
@@ -123,7 +121,14 @@ def align(M,seq1,seq2,Parameters):
             alignedseq2 = alignedseq2 + seq2[j-1]
             j = j-1
             continue
-
+       
+        #Esquerda
+        if (M[i][j] == M[i-1][j] + Parameters.gap):
+            alignedseq2 = alignedseq2 + "-"
+            alignedseq1 = alignedseq1 + seq1[i-1]
+            i = i-1
+            continue
+            
         #Diagonal
         if (M[i][j] == M[i-1][j-1] + Parameters.score(seq1[i-1], seq2[j-1])):
             alignedseq2 = alignedseq2 + seq2[j-1]
@@ -138,8 +143,8 @@ def align(M,seq1,seq2,Parameters):
             alignedseq2 = alignedseq2 + seq2[j-1]
             j=j-1
             continue
-
         
+
     #Revertendo a String        
     alignedseq1 = alignedseq1[::-1]
     alignedseq2 = alignedseq2[::-1]
@@ -173,7 +178,7 @@ def print_matrix(seq1, seq2, M):
 
 if __name__ == '__main__':
     #Definicoes dos parametros
-    par = Parameters(gap=-2,matrix='BLOSUM62',stype='protein')
+    par = Parameters(gap=10,matrix='BLOSUM62',stype='protein')
 
     #Sequencias
     #>tr|B7Z8R9|B7Z8R9_HUMAN cDNA FLJ57474, highly similar to Homo sapiens plasticity
