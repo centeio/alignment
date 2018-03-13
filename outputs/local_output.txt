@@ -1,0 +1,4 @@
+[ALIGNMENT] 
+        SEQ1: C---LF- 
+        SEQ2: AAACLFF 
+        #gaps: 4 	 #matches: 2 	 #mismatches: 1

@@ -1,8 +1,9 @@
-import xml.etree.ElementTree as ET
 import requests
 import logging as LOG
 import re
 from datetime import datetime
+from util.alignment import Alignment
+from util import io
 
 """
 This script aims to consume EBI rest webservice for the needle
@@ -15,9 +16,6 @@ alignment algorithm
 EBI_RUN_URL = "http://www.ebi.ac.uk/Tools/services/rest/emboss_needle/run/"
 EBI_RESULT_URL = "http://www.ebi.ac.uk/Tools/services/rest/emboss_needle/result/"
 REGEX = "(?<=\d )[AGVLYETDFQHICSMKPRNW\-]{1,50}"
-MATCH_REGEX = "(?:Identity:)      (\d+)"
-GAP_REGEX = "(?:Gaps:)         (\d+)"
-MISMATCH_REGEX = "(?:Similarity:)    (\d+)"
 
 #EXAMPLE OF REQUEST
 data = {"email":"up201711183@fc.up.pt",
@@ -29,22 +27,10 @@ data = {"email":"up201711183@fc.up.pt",
     "endextend":"0.5",
     "format":"pair",
     "stype":"protein",
-    "asequence":">sp|Q9Y2Y8|PRG3_HUMAN Proteoglycan 3 OS=Homo sapiens GN=PRG3 PE=1 SV=2\nMQCLLLLPFLLLGTVSALHLENDAPHLESLETQADLGQDLDSSKEQERDLALTEEVIQAE\nGEEVKASACQDNFEDEEAMESDPAALDKDFQCPREEDIVEVQGSPRCKICRYLLVRTPKT\nFAEAQNVCSRCYGGNLVSIHDFNFNYRIQCCTSTVNQAQVWIGGNLRGWFLWKRFCWTDG\nSHWNFAYWSPGQPGNGQGSCVALCTKGGYWRRAQCDKQLPFVCSF",
-    "bsequence":">tr|B7Z8R9|B7Z8R9_HUMAN cDNA FLJ57474, highly similar to Homo sapiens plasticity related gene 3 (PRG-3), transcript variant 1, mRNA OS=Homo sapiens PE=2 SV=1\nMAGTVLLAYYFECTDTFQVHIQGFFCQDGDLMKPYPGTEEESFITPLVLYCVLAATPTAI\nIFIGEISMYFIKSTRESLIAQEKTILTGECCYLNPLLRRIIRFTGVFAFGLFATDIFVNA\nGQVVTGHLTPYFLTVCKPNYTSADCQAHHQFINNGNICTGDLEVIEKARRSFPSKHAALS\nIYSALYATMYITSTIKTKSSRLAKPVLCLGTLCTAFLTGLNRVSEYRNHCSDVIAGFILG\nTAVALFLGMCVVHNFKGTQGSPSKPKPEDPRGVPLMAFPRIESPLETLSAQNHSASMTEV\nT"}
+    "asequence":io.read_file("../inputs/dummy1.fasta"),
+    "bsequence":io.read_file("../inputs/dummy2.fasta")
+      }
     
-
-class Alignment():
-    def __init__(self, seq1, seq2, gaps, matches, mismatches):
-        self.gaps = gaps
-        self.matches = matches
-        self.mismatches = mismatches
-        self.seq1 = seq1
-        self.seq2 = seq2
-    def __str__(self):
-        return "[ALIGNMENT] \n\
-        SEQ1: {} \n\
-        SEQ2: {} \n\
-        #gaps: {} \t #matches: {} \t #mismatches: {}".format(self.seq1,self.seq2,self.gaps,self.matches,self.mismatches)
 
 def get_alignment(string):
     """
@@ -52,10 +38,6 @@ def get_alignment(string):
             to get just the two sequences aligned.
     return: An alignment object
     """
-    
-    matches = re.compile(MATCH_REGEX).findall(string)[0] #getting the number of matches
-    gaps = re.compile(GAP_REGEX).findall(string)[0] #getting the number of gaps
-    mismatches = re.compile(MISMATCH_REGEX).findall(string)[0] #getting the number of mismatches
     
     string = re.sub(re.compile("#.*?\n" ) ,"" ,string) ##removing all comments
     p = re.compile(REGEX) #getting the REGEX variable
@@ -65,16 +47,16 @@ def get_alignment(string):
     string1 = ''.join(string1) #join all items in a single string with '' sepring them
     string2 = ''.join(string2) #the same as above
     
-    result = Alignment(string1,string2,gaps,matches,mismatches)
+    result = Alignment(string1,string2)
+    result.calculate_mat_mis_gaps()
     
     return result
 
 
 if __name__ == '__main__':
     #CONFIG
-    LOG.basicConfig(filename='run_on_ebi.log',level=LOG.INFO)
+    LOG.basicConfig(filename='../log/run_on_ebi.log',level=LOG.INFO)
     LOG.info("----------\n")
-    path = 'ebi_output.txt'
 
     # RUN
     LOG.info("[{0}] Requesting the URL = {1}...".format(datetime.now(),EBI_RUN_URL))
@@ -97,15 +79,10 @@ if __name__ == '__main__':
 
     alignment = get_alignment(result.text)
 
-    f = open(path, 'w+')
-    f.write(alignment.seq1)
-    f.write("\n")
-    f.write(alignment.seq2)
-    f.close()
+    io.write_file("../outputs/ebi_output.txt",str(result))
     
     print(str(alignment))
 
-    print("File with the result in: {}".format(path))
 
 
 
