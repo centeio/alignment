@@ -109,14 +109,22 @@ def traceback(M, Ix, Iy ,seq1,seq2,Parameters):
     j = len(seq2)
 
     #Matriz
-    matrix = "M"
     
+    if(M[i][j] >= Ix[i][j] and M[i][j] >= Iy[i][j]):
+        matrix = "M"
+    elif(Ix[i][j] > Iy[i][j]):
+        matrix = "Ix"
+    else:
+        matrix = "Iy"
+
     print(seq1)
     print(seq2)
 
     while ((i is not 0) or (j is not 0)):
-        print(i,j, matrix)
         if matrix == "M":
+            alignedseq2 = alignedseq2 + seq2[j-1]
+            alignedseq1 = alignedseq1 + seq1[i-1]
+
             score = Parameters.score(seq1[i-1],seq2[j-1])
 
             diag = M[i-1][j-1] + score
@@ -125,53 +133,40 @@ def traceback(M, Ix, Iy ,seq1,seq2,Parameters):
 
             if M[i][j] == esq:
                 matrix = "Ix"
-                alignedseq2 = alignedseq2 + "-"
-                alignedseq1 = alignedseq1 + seq1[i-1]
                 
             elif M[i][j] == diag:
                 matrix = "M"
-                alignedseq2 = alignedseq2 + seq2[j-1]
-                alignedseq1 = alignedseq1 + seq1[i-1]
 
             elif M[i][j] == cim:
                 matrix = "Iy"
-                alignedseq1 = alignedseq1 + '-'
-                alignedseq2 = alignedseq2 + seq2[j-1]
 
             i = i-1
             j = j-1 
         
         elif matrix == "Ix":
+            alignedseq2 = alignedseq2 + "-"
+            alignedseq1 = alignedseq1 + seq1[i-1]
+
             if Ix[i][j] == M[i-1][j] + Parameters.gapopen + Parameters.gap:
                 matrix = "M"
-                alignedseq2 = alignedseq2 + seq2[j-1]
-                alignedseq1 = alignedseq1 + seq1[i-1]
                 
             elif Ix[i][j] == Ix[i-1][j] + Parameters.gap:
                 matrix = "Ix"
-                alignedseq2 = alignedseq2 + "-"
-                alignedseq1 = alignedseq1 + seq1[i-1]
+
                 
             i = i-1
         
         elif matrix == "Iy":
+            alignedseq1 = alignedseq1 + '-'
+            alignedseq2 = alignedseq2 + seq2[j-1]
+
             if Iy[i][j] == M[i][j-1] + Parameters.gapopen + Parameters.gap:
                 matrix = "M"
-                alignedseq2 = alignedseq2 + seq2[j-1]
-                alignedseq1 = alignedseq1 + seq1[i-1]
                 
             elif Iy[i][j] == Iy[i][j-1] + Parameters.gap:
                 matrix = "Iy"
-                alignedseq1 = alignedseq1 + '-'
-                alignedseq2 = alignedseq2 + seq2[j-1]
         
             j = j-1
-
-        print(alignedseq1)
-        print(alignedseq2)
-        print(".")
-
-
 
 
 
