@@ -44,11 +44,14 @@ def global_align(seq1, seq2, Parameters=Parameters()):
     #initializes matrices
     for i in range(0, len(seq1)+1):
         for j in range(0, len(seq2)+1):
-            if i==0:
+            if i==0 and j==0:
+                Iy[i][j] = Parameters.gapopen + (Parameters.gap*j)
+                Ix[i][j] = Parameters.gapopen + (Parameters.gap*i)
+            elif i==0:
                 Iy[i][j] = Parameters.gapopen + (Parameters.gap*j)
                 Ix[i][j] = -INF
                 M[i][j] = - INF
-            if j==0:
+            elif j==0:
                 Ix[i][j] = Parameters.gapopen + (Parameters.gap*i)
                 Iy[i][j] = -INF
                 M[i][j] = - INF
@@ -72,13 +75,6 @@ def global_align(seq1, seq2, Parameters=Parameters()):
                     cim 
                 )
 
-                if M[i][j] == diag:
-                    P[i][j] = "DIAG"
-                elif M[i][j] == cim:
-                    P[i][j] = "CIM"
-                else:
-                    P[i][j] = "ESQ"
-
                 Ix[i][j] = max (
                     M[i-1][j] + Parameters.gapopen + Parameters.gap,
                     Ix[i-1][j] + Parameters.gap
@@ -100,9 +96,9 @@ def global_align(seq1, seq2, Parameters=Parameters()):
         print_matrix("_"+seq1,"_"+seq2,M)
 
 
-    return P
+    return M, Ix, Iy
 
-def traceback(P,seq1,seq2,Parameters):
+def traceback(M, Ix, Iy ,seq1,seq2,Parameters):
 
     # As duas sequencias
     alignedseq1 = ""
@@ -111,31 +107,73 @@ def traceback(P,seq1,seq2,Parameters):
     # Os ultimos indices
     i = len(seq1)
     j = len(seq2)
+
+    #Matriz
+    matrix = "M"
     
+    print(seq1)
+    print(seq2)
+
     while ((i is not 0) or (j is not 0)):
-        atual = P[i][j]
+        print(i,j, matrix)
+        if matrix == "M":
+            score = Parameters.score(seq1[i-1],seq2[j-1])
 
-        #Esquerda
-        if (atual == "ESQ"):
-            alignedseq2 = alignedseq2 + "-"
-            alignedseq1 = alignedseq1 + seq1[i-1]
+            diag = M[i-1][j-1] + score
+            esq = Ix[i-1][j-1] + score
+            cim = Iy[i-1][j-1] + score
+
+            if M[i][j] == esq:
+                matrix = "Ix"
+                alignedseq2 = alignedseq2 + "-"
+                alignedseq1 = alignedseq1 + seq1[i-1]
+                
+            elif M[i][j] == diag:
+                matrix = "M"
+                alignedseq2 = alignedseq2 + seq2[j-1]
+                alignedseq1 = alignedseq1 + seq1[i-1]
+
+            elif M[i][j] == cim:
+                matrix = "Iy"
+                alignedseq1 = alignedseq1 + '-'
+                alignedseq2 = alignedseq2 + seq2[j-1]
+
             i = i-1
-            continue
+            j = j-1 
+        
+        elif matrix == "Ix":
+            if Ix[i][j] == M[i-1][j] + Parameters.gapopen + Parameters.gap:
+                matrix = "M"
+                alignedseq2 = alignedseq2 + seq2[j-1]
+                alignedseq1 = alignedseq1 + seq1[i-1]
+                
+            elif Ix[i][j] == Ix[i-1][j] + Parameters.gap:
+                matrix = "Ix"
+                alignedseq2 = alignedseq2 + "-"
+                alignedseq1 = alignedseq1 + seq1[i-1]
+                
+            i = i-1
+        
+        elif matrix == "Iy":
+            if Iy[i][j] == M[i][j-1] + Parameters.gapopen + Parameters.gap:
+                matrix = "M"
+                alignedseq2 = alignedseq2 + seq2[j-1]
+                alignedseq1 = alignedseq1 + seq1[i-1]
+                
+            elif Iy[i][j] == Iy[i][j-1] + Parameters.gap:
+                matrix = "Iy"
+                alignedseq1 = alignedseq1 + '-'
+                alignedseq2 = alignedseq2 + seq2[j-1]
+        
+            j = j-1
 
-        #Diagonal
-        if (atual == "DIAG"):
-            alignedseq2 = alignedseq2 + seq2[j-1]
-            alignedseq1 = alignedseq1 + seq1[i-1]
-            i= i-1
-            j= j-1 
-            continue
+        print(alignedseq1)
+        print(alignedseq2)
+        print(".")
 
-        #Cima
-        if (atual == "CIM"):
-            alignedseq1 = alignedseq1 + '-'
-            alignedseq2 = alignedseq2 + seq2[j-1]
-            j=j-1
-            continue
+
+
+
 
 
     #Revertendo a String        
@@ -156,10 +194,10 @@ if __name__ == '__main__':
     seq2 =io.read_fasta(io.read_file("../inputs/dummy2.fasta"))
     
     #Matriz de apontadores
-    P = global_align(seq1, seq2, par)
+    M, Ix, Iy = global_align(seq1, seq2, par)
 
     #Sequencias alinhadas
-    alignedseq1, alignedseq2 = traceback(P, seq1, seq2, par)
+    alignedseq1, alignedseq2 = traceback(M, Ix, Iy, seq1, seq2, par)
 
     result = Alignment(alignedseq1,alignedseq2)
     result.calculate_mat_mis_gaps()
