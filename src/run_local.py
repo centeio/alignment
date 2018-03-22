@@ -5,9 +5,9 @@ from util.matrices import *
 from util.alignment import Alignment
 from util import io
 
-#INF = sys.maxsize
-INF = 1000
-DEBUG = True
+INF = sys.maxsize
+#INF = 1000
+DEBUG = False
 
 ####################
 #### PARAMETERS ####
@@ -109,7 +109,6 @@ def traceback(M, Ix, Iy ,seq1,seq2,Parameters):
     j = len(seq2)
 
     #Matriz
-    
     if(M[i][j] >= Ix[i][j] and M[i][j] >= Iy[i][j]):
         matrix = "M"
     elif(Ix[i][j] > Iy[i][j]):
@@ -117,8 +116,6 @@ def traceback(M, Ix, Iy ,seq1,seq2,Parameters):
     else:
         matrix = "Iy"
 
-    print(seq1)
-    print(seq2)
 
     while ((i is not 0) or (j is not 0)):
         if matrix == "M":
@@ -170,7 +167,6 @@ def traceback(M, Ix, Iy ,seq1,seq2,Parameters):
 
 
 
-
     #Revertendo a String        
     alignedseq1 = alignedseq1[::-1]
     alignedseq2 = alignedseq2[::-1]
@@ -196,5 +192,5 @@ if __name__ == '__main__':
 
     result = Alignment(alignedseq1,alignedseq2)
     result.calculate_mat_mis_gaps()
-    print(str(result))
+    #print(str(result))
     io.write_file("../outputs/local_output.txt",str(result))
