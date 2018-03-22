@@ -1,0 +1,19 @@
+{% extends 'base.html' %} {% block content %}
+<div style="margin-top: 5%">
+    <h1>RESULTADO</h1>
+    <h2>{{ algo.seq1 }} </h2>
+    <h2>{{ algo.seq2 }} </h2>
+    <h2>{{ algo.matches }} </h2>
+    <h2>{{ algo.mismatches }} </h2>
+    <h2>{{ algo.gaps }} </h2>
+    
+
+    <h1>RESULTADO EBI</h1>
+    <h2>{{ ebi.seq1 }} </h2>
+    <h2>{{ ebi.seq2 }} </h2>
+    <h2>{{ ebi.matches }} </h2>
+    <h2>{{ ebi.mismatches }} </h2>
+    <h2>{{ ebi.gaps }} </h2>
+    
+</div>
+{% endblock %}

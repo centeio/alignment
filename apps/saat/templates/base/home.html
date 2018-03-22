@@ -1,0 +1,55 @@
+{% extends 'base.html' %} {% block content %}
+<!-- <div style="margin-top: 5%">
+    <h1>Insira as sequencias</h1>
+    <form method="POST" class="post-form">{% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="save btn btn-default">ALINHAR</button>
+    </form>
+</div> -->
+
+<section id="loginform" class="outer-wrapper">
+
+    <div class="inner-wrapper">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4 col-sm-offset-4">
+                    <h2 class="text-center">SUPER AWESOME ALIGNMENT TOOL</h2>
+                    <form method="POST" role="form"> {% csrf_token %}
+                        <div class="form-group">
+                            <label for="seq1">Sequence 1</label>
+                                {{form.seq1}}
+                        </div>
+                        <div class="form-group">
+                            <label for="seq2">Sequence 2</label>
+                                {{form.seq2}}
+                        </div>
+
+                        <div class="form-group">
+                            <label for="seqtype">Sequence type</label>
+                                {{form.seqtype}}
+                            <label for="matrix">Matrix</label>
+                                {{form.matrix}}
+                        </div>
+                        <div class="form-group">
+                                <label for="gapopen">Gap Open</label>
+                                    {{form.gapopen}}
+                                <label for="gapext">Gap Extended</label>
+                                    {{form.gapext}}
+                            </div>
+                        <!--<div class="form-group">
+                            <label for="exampleInputPassword1">Password</label>
+                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                        </div>
+ -->
+                        <!-- {{form.as_p}} -->
+                        <button type="submit" class="btn btn-default">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
+{% endblock %}
