@@ -1,1 +1,4 @@
-<Response [200]>
+[ALIGNMENT] 
+        SEQ1: ---CLF- 
+        SEQ2: AAACLFF 
+        #gaps: 4 	 #matches: 3 	 #mismatches: 0

@@ -62,7 +62,7 @@ if __name__ == '__main__':
     LOG.info("[{0}] Requesting the URL = {1}...".format(datetime.now(),EBI_RUN_URL))
     r = requests.post(EBI_RUN_URL,data)
     LOG.info("[{0}] Request made and the code returned was {1}".format(datetime.now(),r.status_code))
-    print ("Nome do job gerado = {}".format(r.text))
+    LOG.info("Nome do job gerado = {}".format(r.text))
 
     #RESULT
     LOG.info("[{0}] Requesting the URL = {1}...".format(datetime.now(),EBI_RESULT_URL))
@@ -79,9 +79,9 @@ if __name__ == '__main__':
 
     alignment = get_alignment(result.text)
 
-    io.write_file("../outputs/ebi_output.txt",str(result))
+    io.write_file("../outputs/ebi_output.txt",str(alignment))
     
-    print(str(alignment))
+    #print(str(alignment))
 
 
 
