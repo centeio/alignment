@@ -20,12 +20,11 @@ Once everything is installed you can run the development server: [http://localho
 
 There's a pretty straightforward form you should fill with your sequences and the settings for the algorithms to work. **It's fasta format compatible!**
 
-Once you fill and press submit, it'll take some time and you'll be redirected to the results page where you can find our alignment along with [EBI's](https://www.ebi.ac.uk/) result for the same inputs and settings.
+Once you fill and press "Alinhar", it'll take some time and you'll be redirected to the results page where you can find our alignment along with [EBI's](https://www.ebi.ac.uk/) result for the same inputs and settings.
 
-### Notes ###
+### Usage Example
 
-- You must fill the gapopen and gapext parameters with negative values!
-- If you don't fill theses parameters the default will be **-10 for gap** and **-0.5 for gapext**
+![Web Interface](https://im5.ezgif.com/tmp/ezgif-5-e48cb3bf8f.gif "Web Interface Usage")
 
 
 ##### django template from [@fasouto](https://github.com/fasouto/django-starter-template)
