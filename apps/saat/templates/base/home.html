@@ -1,55 +1,49 @@
 {% extends 'base.html' %} {% block content %}
-<!-- <div style="margin-top: 5%">
-    <h1>Insira as sequencias</h1>
-    <form method="POST" class="post-form">{% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="save btn btn-default">ALINHAR</button>
-    </form>
-</div> -->
 
-<section id="loginform" class="outer-wrapper">
+    <div class="container h-100 ">
+        <div class="row h-100 justify-content-center align-items-center">
+            <div class="col-sm-8 col-sm-offset-2 dull">
+                <h2 class="text-center pt1em">SUPER AWESOME ALIGNMENT TOOL</h2>
+                <form method="POST" role="form"> {% csrf_token %}
+                    <div class="form-group">
+                        <label for="seq1">Sequence 1</label>
+                        <br/> {{form.seq1}}
+                    </div>
+                    <div class="form-group">
+                        <label for="seq2">Sequence 2</label>
+                        {{form.seq2}}
+                    </div>
 
-    <div class="inner-wrapper">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-4 col-sm-offset-4">
-                    <h2 class="text-center">SUPER AWESOME ALIGNMENT TOOL</h2>
-                    <form method="POST" role="form"> {% csrf_token %}
-                        <div class="form-group">
-                            <label for="seq1">Sequence 1</label>
-                                {{form.seq1}}
-                        </div>
-                        <div class="form-group">
-                            <label for="seq2">Sequence 2</label>
-                                {{form.seq2}}
-                        </div>
-
-                        <div class="form-group">
+                    <div class="form-group row">
+                        <div class="col-sm-6">
                             <label for="seqtype">Sequence type</label>
-                                {{form.seqtype}}
+                            {{form.seqtype}}
+                        </div>
+                        <div class="col-sm-6">
                             <label for="matrix">Matrix</label>
-                                {{form.matrix}}
+                            {{form.matrix}}
                         </div>
-                        <div class="form-group">
-                                <label for="gapopen">Gap Open</label>
-                                    {{form.gapopen}}
-                                <label for="gapext">Gap Extended</label>
-                                    {{form.gapext}}
-                            </div>
-                        <!--<div class="form-group">
-                            <label for="exampleInputPassword1">Password</label>
-                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-6">
+                            <label for="gapopen">Gap Open</label>
+                            {{form.gapopen}}
                         </div>
- -->
-                        <!-- {{form.as_p}} -->
-                        <button type="submit" class="btn btn-default">Submit</button>
-                    </form>
-                </div>
+                        <div class="col-sm-6">
+                            <label for="gapext">Gap Extended</label>
+                            {{form.gapext}}
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-block btn-primary">
+                                <i class="fa fa-align-left"></i>
+                                Alinhar
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-
-</section>
 
 
 {% endblock %}

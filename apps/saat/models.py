@@ -62,3 +62,11 @@ class SeqForm(forms.ModelForm):
     class Meta:
         model = Alignment
         fields = ('seq1', 'seq2', 'seqtype', 'matrix', 'gapopen', 'gapext')
+        widgets = {
+                'seq1': forms.Textarea(attrs={'cols': 100, 'rows': 5, 'class':'form-control'}),
+                'seq2': forms.Textarea(attrs={'cols': 100, 'rows': 5, 'class':'form-control'}),
+                'gapext': forms.Select(attrs={'class': 'form-control'}),
+                'gapopen': forms.Select(attrs={'class': 'form-control'}),
+                'seqtype': forms.Select(attrs={'class': 'form-control'}),
+                'matrix': forms.Select(attrs={'class': 'form-control'})
+            }

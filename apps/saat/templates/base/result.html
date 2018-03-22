@@ -1,19 +1,80 @@
 {% extends 'base.html' %} {% block content %}
-<div style="margin-top: 5%">
-    <h1>RESULTADO</h1>
-    <h2>{{ algo.seq1 }} </h2>
-    <h2>{{ algo.seq2 }} </h2>
-    <h2>{{ algo.matches }} </h2>
-    <h2>{{ algo.mismatches }} </h2>
-    <h2>{{ algo.gaps }} </h2>
-    
+<div class="container h-100 ">
+    <div class="row h-100 justify-content-center align-items-center">
+        <div class="col-sm-12 dull">
+            <div class="row">
+                <div class="col-md-6 col-sm-12 text-center">
+                    <h2 class="text-center pt1em">Local Results</h2>
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col-md-2 col-sm-12 text-center">
+                            <label>Matches
+                            </label>
+                            <span class="badge badge-success score">{{algo.matches}}</span>
+                        </div>
+                        <div class="col-md-2 col-sm-12 text-center">
+                            <label>Mismatches
+                            </label>
+                            <span class="badge badge-danger score">{{algo.mismatches}}</span>
 
-    <h1>RESULTADO EBI</h1>
-    <h2>{{ ebi.seq1 }} </h2>
-    <h2>{{ ebi.seq2 }} </h2>
-    <h2>{{ ebi.matches }} </h2>
-    <h2>{{ ebi.mismatches }} </h2>
-    <h2>{{ ebi.gaps }} </h2>
-    
+                        </div>
+                        <div class="col-md-2 col-sm-12 text-center">
+                            <label>Gaps
+                            </label>
+                            <span class="badge badge-warning score">{{algo.gaps}}</span>
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h3 class="text-center pt1em">Sequences aligned</h3>
+                            <pre>seq1: {{ algo.seq1 }}
+seq2: {{ algo.seq2 }}</pre>
+                        
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-sm-12 text-center">
+                    <h2 class="text-center pt1em">EBI Results</h2>
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col-md-2 col-sm-12 text-center">
+                            <label>Matches
+                            </label>
+                            <span class="badge badge-success score">{{ebi.matches}}</span>
+                        </div>
+                        <div class="col-md-2 col-sm-12 text-center">
+                            <label>Mismatches
+                            </label>
+                            <span class="badge badge-danger score">{{ebi.mismatches}}</span>
+
+                        </div>
+                        <div class="col-md-2 col-sm-12 text-center">
+                            <label>Gaps
+                            </label>
+                            <span class="badge badge-warning score">{{ebi.gaps}}</span>
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h3 class="text-center pt1em">Sequences aligned</h3>
+                            <pre>seq1: {{ ebi.seq1 }} 
+seq2: {{ ebi.seq2 }}</pre>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+            <div class="text-center mb1em">
+                <a href="/" class="btn btn-block btn-primary">
+                    <i class="fa fa-arrow-left"></i>Voltar
+                    </a>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}
