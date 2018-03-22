@@ -39,8 +39,7 @@ def global_align(seq1, seq2, Parameters=Parameters()):
     M = create_matrix(len(seq1), len(seq2))
     Ix = create_matrix(len(seq1), len(seq2))
     Iy = create_matrix(len(seq1), len(seq2))
-    P = create_matrix(len(seq1), len(seq2))
-    
+  
     #initializes matrices
     for i in range(0, len(seq1)+1):
         for j in range(0, len(seq2)+1):
