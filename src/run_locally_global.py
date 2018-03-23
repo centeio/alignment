@@ -7,7 +7,7 @@ from util import io
 
 INF = sys.maxsize
 #INF = 1000
-DEBUG = False
+DEBUG = True
 
 ####################
 #### PARAMETERS ####
@@ -31,9 +31,9 @@ class Parameters:
             self.matrix, self.stype, self.gap, self.gapext
             )
 
-##########################
+#########################
 #### GLOBAL ALIGNMENT ####
-##########################
+#########################
 
 def global_align(seq1, seq2, Parameters=Parameters()):
     M = create_matrix(len(seq1), len(seq2))
@@ -44,19 +44,15 @@ def global_align(seq1, seq2, Parameters=Parameters()):
     for i in range(0, len(seq1)+1):
         for j in range(0, len(seq2)+1):
             if i==0 and j==0:
-                Iy[i][j] = Parameters.gapopen + (Parameters.gap*j)
-                Ix[i][j] = Parameters.gapopen + (Parameters.gap*i)
+                M[i][j] = 0
             elif i==0:
-                Iy[i][j] = Parameters.gapopen + (Parameters.gap*j)
-                Ix[i][j] = -INF
+                Iy[i][j] = 0
+                Ix[i][j] = - INF
                 M[i][j] = - INF
             elif j==0:
-                Ix[i][j] = Parameters.gapopen + (Parameters.gap*i)
+                Ix[i][j] = 0
                 Iy[i][j] = -INF
                 M[i][j] = - INF
-
-    M[0][0] = 0
-
 
 
     #Affine Score
@@ -89,8 +85,6 @@ def global_align(seq1, seq2, Parameters=Parameters()):
         print_matrix("_"+seq1,"_"+seq2,Ix)
         print("\nIy")
         print_matrix("_"+seq1,"_"+seq2,Iy)
-        print("\nP")
-        print_matrix("_"+seq1,"_"+seq2,P)
         print("\nM")
         print_matrix("_"+seq1,"_"+seq2,M)
 
@@ -191,5 +185,5 @@ if __name__ == '__main__':
 
     result = Alignment(alignedseq1,alignedseq2)
     result.calculate_mat_mis_gaps()
-    #print(str(result))
-    io.write_file("../outputs/local_output.txt",str(result))
+    print(str(result))
+    io.write_file("../outputs/locally_global_output.txt",str(result))
