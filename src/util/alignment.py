@@ -1,7 +1,8 @@
 class Alignment():
-    def __init__(self, seq1, seq2):
+    def __init__(self, seq1, seq2, direction):
         self.seq1 = seq1
         self.seq2 = seq2
+        self.direction = direction
         self.matches = "not calculated yet"
         self.mismatches = "not calculated yet"
         self.gaps = "not calculated yet"
@@ -21,7 +22,7 @@ class Alignment():
                 
     
     def __str__(self):
-        return "[ALIGNMENT] \n\
+        return "[ALIGNMENT {}] \n\
         SEQ1: {} \n\
         SEQ2: {} \n\
-        #gaps: {} \t #matches: {} \t #mismatches: {}".format(self.seq1,self.seq2,self.gaps,self.matches,self.mismatches)
+        #gaps: {} \t #matches: {} \t #mismatches: {}".format(self.direction,self.seq1,self.seq2,self.gaps,self.matches,self.mismatches)

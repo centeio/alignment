@@ -91,7 +91,7 @@ def global_align(seq1, seq2, Parameters=Parameters()):
 
     return M, Ix, Iy
 
-def traceback(M, Ix, Iy ,seq1,seq2,Parameters):
+def traceback_left(M, Ix, Iy ,seq1,seq2,Parameters):
 
     # As duas sequencias
     alignedseq1 = ""
@@ -166,6 +166,81 @@ def traceback(M, Ix, Iy ,seq1,seq2,Parameters):
 
     return alignedseq1, alignedseq2
 
+def traceback_up(M, Ix, Iy ,seq1,seq2,Parameters):
+
+    # As duas sequencias
+    alignedseq1 = ""
+    alignedseq2 = ""
+
+    # Os ultimos indices
+    i = len(seq1)
+    j = len(seq2)
+
+    #Matriz
+    if(M[i][j] >= Ix[i][j] and M[i][j] >= Iy[i][j]):
+        matrix = "M"
+    elif(Ix[i][j] > Iy[i][j]):
+        matrix = "Ix"
+    else:
+        matrix = "Iy"
+
+
+    while ((i is not 0) or (j is not 0)):
+        if matrix == "M":
+            alignedseq2 = alignedseq2 + seq2[j-1]
+            alignedseq1 = alignedseq1 + seq1[i-1]
+
+            score = Parameters.score(seq1[i-1],seq2[j-1])
+
+            diag = M[i-1][j-1] + score
+            esq = Ix[i-1][j-1] + score
+            cim = Iy[i-1][j-1] + score
+
+            if M[i][j] == cim:
+                matrix = "Iy"
+
+            elif M[i][j] == diag:
+                matrix = "M"
+
+            elif M[i][j] == esq:
+                matrix = "Ix"
+
+            i = i-1
+            j = j-1 
+        
+        elif matrix == "Ix":
+            alignedseq2 = alignedseq2 + "-"
+            alignedseq1 = alignedseq1 + seq1[i-1]
+                
+            if Ix[i][j] == Ix[i-1][j] + Parameters.gap:
+                matrix = "Ix"
+
+            elif Ix[i][j] == M[i-1][j] + Parameters.gapopen + Parameters.gap:
+                matrix = "M"
+                
+            i = i-1
+        
+        elif matrix == "Iy":
+            alignedseq1 = alignedseq1 + '-'
+            alignedseq2 = alignedseq2 + seq2[j-1]
+                
+            if Iy[i][j] == Iy[i][j-1] + Parameters.gap:
+                matrix = "Iy"
+
+            elif Iy[i][j] == M[i][j-1] + Parameters.gapopen + Parameters.gap:
+                matrix = "M"
+
+        
+            j = j-1
+
+
+
+    #Revertendo a String        
+    alignedseq1 = alignedseq1[::-1]
+    alignedseq2 = alignedseq2[::-1]
+
+    return alignedseq1, alignedseq2
+
 
 
 
@@ -181,9 +256,15 @@ if __name__ == '__main__':
     M, Ix, Iy = global_align(seq1, seq2, par)
 
     #Sequencias alinhadas
-    alignedseq1, alignedseq2 = traceback(M, Ix, Iy, seq1, seq2, par)
+    leftalignedseq1, leftalignedseq2 = traceback_left(M, Ix, Iy, seq1, seq2, par)
+    upalignedseq1, upalignedseq2 = traceback_up(M, Ix, Iy, seq1, seq2, par)
 
-    result = Alignment(alignedseq1,alignedseq2)
+    result = Alignment(leftalignedseq1,leftalignedseq2, "LEFT")
     result.calculate_mat_mis_gaps()
-    print(str(result))
+    print(str(result))   
+    io.write_file("../outputs/locally_global_output.txt",str(result))
+
+    result = Alignment(upalignedseq1,upalignedseq2, "UP")
+    result.calculate_mat_mis_gaps()
+    print(str(result))   
     io.write_file("../outputs/locally_global_output.txt",str(result))
