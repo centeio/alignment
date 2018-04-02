@@ -77,7 +77,7 @@ class AffineGlobal():
         return M, Ix, Iy
         
 
-    def traceback(self, M, Ix, Iy, seq1, seq2, Parameters):
+    def traceback_left(self, M, Ix, Iy, seq1, seq2, Parameters):
 
         # As duas sequencias
         alignedseq1 = ""
@@ -152,15 +152,105 @@ class AffineGlobal():
 
         return alignedseq1, alignedseq2
 
+    def traceback_up(self, M, Ix, Iy ,seq1,seq2,Parameters):
+
+        # As duas sequencias
+        alignedseq1 = ""
+        alignedseq2 = ""
+
+        # Os ultimos indices
+        i = len(seq1)
+        j = len(seq2)
+
+        #Matriz
+        if(M[i][j] >= Ix[i][j] and M[i][j] >= Iy[i][j]):
+            matrix = "M"
+        elif(Ix[i][j] > Iy[i][j]):
+            matrix = "Ix"
+        else:
+            matrix = "Iy"
+
+
+        while ((i is not 0) or (j is not 0)):
+            if matrix == "M":
+                alignedseq2 = alignedseq2 + seq2[j-1]
+                alignedseq1 = alignedseq1 + seq1[i-1]
+
+                score = Parameters.score(seq1[i-1],seq2[j-1])
+
+                diag = M[i-1][j-1] + score
+                esq = Ix[i-1][j-1] + score
+                cim = Iy[i-1][j-1] + score
+
+                if M[i][j] == cim:
+                    matrix = "Iy"
+
+                elif M[i][j] == diag:
+                    matrix = "M"
+
+                elif M[i][j] == esq:
+                    matrix = "Ix"
+
+                i = i-1
+                j = j-1 
+            
+            elif matrix == "Ix":
+                alignedseq2 = alignedseq2 + "-"
+                alignedseq1 = alignedseq1 + seq1[i-1]
+                    
+                if Ix[i][j] == Ix[i-1][j] + Parameters.gapext:
+                    matrix = "Ix"
+
+                elif Ix[i][j] == M[i-1][j] + Parameters.gapopen + Parameters.gapext:
+                    matrix = "M"
+                    
+                i = i-1
+            
+            elif matrix == "Iy":
+                alignedseq1 = alignedseq1 + '-'
+                alignedseq2 = alignedseq2 + seq2[j-1]
+                    
+                if Iy[i][j] == Iy[i][j-1] + Parameters.gapext:
+                    matrix = "Iy"
+
+                elif Iy[i][j] == M[i][j-1] + Parameters.gapopen + Parameters.gapext:
+                    matrix = "M"
+
+            
+                j = j-1
+
+
+
+        #Revertendo a String        
+        alignedseq1 = alignedseq1[::-1]
+        alignedseq2 = alignedseq2[::-1]
+
+        return alignedseq1, alignedseq2
+
+
     def run(self, seq1, seq2, par):
         seq1 = io.read_fasta(seq1)
         seq2 = io.read_fasta(seq2)
 
         M, Ix, Iy = self.affine_global_align(seq1, seq2, par)
 
-        alignedseq1, alignedseq2 = self.traceback(M, Ix, Iy, seq1, seq2, par)
-        result = Alignment(alignedseq1,alignedseq2)
-        result.calculate_mat_mis_gaps()
+        
+        alignedseq1, alignedseq2 = self.traceback_left(M, Ix, Iy, seq1, seq2, par)
+        result1 = Alignment(alignedseq1,alignedseq2)
+        result1.calculate_mat_mis_gaps()
 
-        return result
+        #if is multiple tracebacks
+        if(self.multiples):
+            alignedseq3, alignedseq4 = self.traceback_up(M, Ix, Iy, seq1, seq2, par)
+            
+            if(alignedseq1 == alignedseq3 and alignedseq2 == alignedseq4):
+                #traceback going up is the same as going left
+                return [result1]
+
+            #if is different
+            result2 = Alignment(alignedseq3,alignedseq4)
+            result2.calculate_mat_mis_gaps()
+            return [result1, result2]
+        
+        return [result1]
 

@@ -7,109 +7,167 @@ from .util.alignment import Alignment, Parameters
 from .util import io
 from .util.matrices import *
 
+INF = sys.maxsize
+#INF = 1000
+DEBUG = False
+
 class Local():
     def local_align(self,seq1, seq2, Parameters=Parameters()):
         M = create_matrix(len(seq1), len(seq2))
+        Ix = create_matrix(len(seq1), len(seq2))
+        Iy = create_matrix(len(seq1), len(seq2))
+    
+        #initializes matrices
+        for i in range(0, len(seq1)+1):
+            for j in range(0, len(seq2)+1):
+                if i==0 and j==0:
+                    Iy[i][j] = Parameters.gapopen + (Parameters.gapext*j)
+                    Ix[i][j] = Parameters.gapopen + (Parameters.gapext*i)
+                    M[i][j] = 0
+                elif i==0:
+                    Iy[i][j] = Parameters.gapopen + (Parameters.gapext*j)
+                    Ix[i][j] = - INF
+                    M[i][j] = - INF
+                elif j==0:
+                    Ix[i][j] = Parameters.gapopen + (Parameters.gapext*i)
+                    Iy[i][j] = - INF
+                    M[i][j] = - INF
 
-        score = 0
+        #Max score
+        maxmatrix = "M"
+        max_score = 0
         li = 0
         lj = 0
 
-        # fill in A in the right order
+        #Affine Score
         for i in range(1, len(seq1)+1):
             for j in range(1, len(seq2)+1):
+                score = Parameters.score(seq1[i-1],seq2[j-1])
+                diag = M[i-1][j-1] + score
+                esq = Ix[i-1][j-1] + score
+                cim = Iy[i-1][j-1] + score
 
-                # the local alignment recurrance rule:
-                M[i][j] = max(
-                M[i][j-1] + Parameters.gapopen,
-                M[i-1][j] + Parameters.gapopen,
-                M[i-1][j-1] + Parameters.score(seq1[i-1], seq2[j-1]),
-                0
+                M[i][j] = max (
+                    esq,
+                    diag,
+                    cim,
+                    0 
                 )
 
-                # track the cell with the largest score
-                if M[i][j] >= score:
-                    score = M[i][j]
+                if M[i][j] >= max_score:
+                    max_score = M[i][j]
                     li = i
                     lj = j
+                    maxmatrix = "M"
 
-        return M, li, lj
+                Ix[i][j] = max (
+                    M[i-1][j] + Parameters.gapopen + Parameters.gapext,
+                    Ix[i-1][j] + Parameters.gapext
+                )
 
+                if Ix[i][j] >= max_score:
+                    max_score = Ix[i][j]
+                    li = i
+                    lj = j
+                    maxmatrix = "Ix"
 
-    def traceback(self,M,seq1,seq2,i,j,Parameters):
-        """
-        Esta funcao encontra o melhor alinhamente seguindo o algoritmo a seguir:
+                Iy[i][j] = max (
+                    M[i][j-1] + Parameters.gapopen + Parameters.gapext,
+                    Iy[i][j-1] + Parameters.gapext
+                )
 
-            0- verificar se a celula corrente esta na borda
-            1- obter os n vizinhos
-            2- obter o valor da celula corrente
-            3- Usar a formula
-                a) M[i][j-1] + Parameters.gap == atual ?
-                b) M[i-1][j-1] + Parameters.score(seq1[i-1], seq2[j-1]) == atual ?
-                c) M[i-1][j] + Parameters.gap == atual ?
-            4 - Criar strings alignedseq1 e alignedseq2
-            5 - caso a) (esquerda)
-                alignedseq2 + "_"
-                alignedseq1 + seq1[j-1]   #"_"+seq1
-                j = j-1
+                if Iy[i][j] >= max_score:
+                    max_score = Iy[i][j]
+                    li = i
+                    lj = j
+                    maxmatrix = "Iy"
+
             
-                caso b) (diagonal)
-                alignedseq1 + seq1[j-1]
-                alignedseq2 + seq2[i-1]
-                j = j-1
-                i = i-1
-            
-                caso c) (cima)
-                alignedseq1 + "_"
-                alignedseq2 + seq2[i-1]
-                i = i-1
-            6 - reverter a string
+        if (DEBUG):
+            print("\nIx")
+            print_matrix("_"+seq1,"_"+seq2,Ix)
+            print("\nIy")
+            print_matrix("_"+seq1,"_"+seq2,Iy)
+            print("\nM")
+            print_matrix("_"+seq1,"_"+seq2,M)
 
-        OBS: J É LINHA e I É COLUNA
-        """
 
+        return M, Ix, Iy, maxmatrix, li, lj
+
+
+    def traceback_left(self,M, Ix, Iy,seq1,seq2,Parameters,maxmatrix,li,lj):
         # As duas sequencias
         alignedseq1 = ""
         alignedseq2 = ""
 
-        while M[i][j] != 0:
+        # Os indices do max score
+        i = li
+        j = lj
 
 
-            #Primeira linha ou esquerda
-            if j==0 or (M[i][j] == M[i-1][j] + Parameters.gapopen):
-                #if M[i-1][j] is not 0:
+        #Matriz
+        matrix = maxmatrix
+
+        while True:
+            if(DEBUG):
+                print(matrix, i, j)
+            
+            if matrix == "M":
+                alignedseq2 = alignedseq2 + seq2[j-1]
+                alignedseq1 = alignedseq1 + seq1[i-1]
+
+                if(M[i][j] == 0):
+                    break
+
+                score = Parameters.score(seq1[i-1],seq2[j-1])
+
+                diag = M[i-1][j-1] + score
+                esq = Ix[i-1][j-1] + score
+                cim = Iy[i-1][j-1] + score
+
+                if M[i][j] == esq:
+                    matrix = "Ix"
+                    
+                elif M[i][j] == diag:
+                    matrix = "M"
+
+                elif M[i][j] == cim:
+                    matrix = "Iy"
+                
+                i = i-1
+                j = j-1 
+            
+            elif matrix == "Ix":
                 alignedseq2 = alignedseq2 + "-"
                 alignedseq1 = alignedseq1 + seq1[i-1]
+
+                if(Ix[i][j] == 0):
+                    break
+                    
+                if Ix[i][j] == Ix[i-1][j] + Parameters.gapext:
+                    matrix = "Ix"
+
+                elif Ix[i][j] == M[i-1][j] + Parameters.gapopen + Parameters.gapext:
+                    matrix = "M"
+                    
                 i = i-1
-                continue
             
-            #Primeira coluna
-            if i==0:
-                #if M[i][j-1] is not 0:
-                alignedseq1 = alignedseq1 + "-"
-                alignedseq2 = alignedseq2 + seq2[j-1]
-                j = j-1
-                continue
-
-        
-            #Diagonal
-            if M[i][j] == M[i-1][j-1] + Parameters.score(seq1[i-1], seq2[j-1]):
-                #if M[i-1][j-1] is not 0:
-                alignedseq2 = alignedseq2 + seq2[j-1]
-                alignedseq1 = alignedseq1 + seq1[i-1]
-                j = j-1
-                i = i-1
-                continue
-
-            #Cima
-            if M[i][j] == M[i][j-1] + Parameters.gapopen:
-                #if M[i][j-1] is not 0:
+            elif matrix == "Iy":
                 alignedseq1 = alignedseq1 + '-'
                 alignedseq2 = alignedseq2 + seq2[j-1]
-                j=j-1
-                continue
 
+                if(Iy[i][j] == 0):
+                    break
+
+                if Iy[i][j] == M[i][j-1] + Parameters.gapopen + Parameters.gapext:
+                    matrix = "M"
+                    
+                elif Iy[i][j] == Iy[i][j-1] + Parameters.gapext:
+                    matrix = "Iy"
             
+                j = j-1
+
+
         #Revertendo a String        
         alignedseq1 = alignedseq1[::-1]
         alignedseq2 = alignedseq2[::-1]
@@ -120,10 +178,11 @@ class Local():
         seq1 = io.read_fasta(seq1)
         seq2 = io.read_fasta(seq2)
 
-        M, i, j = self.local_align(seq1, seq2, par)
+        M, Ix, Iy, maxmatrix, li, lj = self.local_align(seq1, seq2, par)
 
-        alignedseq1, alignedseq2 = self.traceback(M, seq1, seq2, i, j, par)
+        alignedseq1, alignedseq2 = self.traceback_left(M, Ix, Iy,seq1,seq2,par,maxmatrix,li,lj)
+
         result = Alignment(alignedseq1,alignedseq2)
         result.calculate_mat_mis_gaps()
 
-        return result
+        return [result]

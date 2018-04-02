@@ -5,6 +5,7 @@
             <div class="row">
                 <div class="col-md-6 col-sm-12 text-center">
                     <h2 class="text-center pt1em">Local Results</h2>
+                    {% for algo in algo_results %}
                     <div class="row justify-content-center align-items-center">
                         <div class="col-md-2 col-sm-12 text-center">
                             <label>Matches
@@ -25,7 +26,7 @@
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row mb1em">
                         <div class="col-sm-12">
                             <h3 class="text-center pt1em">Sequences aligned</h3>
                             <pre>seq1: {{ algo.seq1 }}
@@ -33,6 +34,7 @@ seq2: {{ algo.seq2 }}</pre>
                         
                         </div>
                     </div>
+                    {% endfor %}
                 </div>
 
                 <div class="col-md-6 col-sm-12 text-center">
@@ -60,7 +62,7 @@ seq2: {{ algo.seq2 }}</pre>
                     <div class="row">
                         <div class="col-sm-12">
                             <h3 class="text-center pt1em">Sequences aligned</h3>
-                            <pre>seq1: {{ ebi.seq1 }} 
+                            <pre>seq1: {{ ebi.seq1 }}
 seq2: {{ ebi.seq2 }}</pre>
                         </div>
                     </div>

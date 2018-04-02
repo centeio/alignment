@@ -124,4 +124,4 @@ class Global():
         result = Alignment(alignedseq1,alignedseq2)
         result.calculate_mat_mis_gaps()
 
-        return result
+        return [result]

@@ -36,7 +36,7 @@ def local(request):
             #EBI
             result_from_ebi = ebi.run(seq1, seq2, savedForm.seqtype, savedForm.matrix, gapopen, gapext)
             
-            return render(request, 'base/result.html', {'algo': result_from_algo, 'ebi': result_from_ebi})
+            return render(request, 'base/result.html', {'algo_results': result_from_algo, 'ebi': result_from_ebi})
     else:
         form = SeqForm()
         
@@ -68,7 +68,7 @@ def globalmultiples(request):
             #EBI
             result_from_ebi = ebi.run(seq1, seq2, savedForm.seqtype, savedForm.matrix, gapopen, gapext)
             
-            return render(request, 'base/result.html', {'algo': result_from_algo, 'ebi': result_from_ebi})
+            return render(request, 'base/result.html', {'algo_results': result_from_algo, 'ebi': result_from_ebi})
     else:
         form = SeqForm()
         
@@ -100,7 +100,7 @@ def globallinear(request):
             #EBI
             result_from_ebi = ebi.run(seq1, seq2, savedForm.seqtype, savedForm.matrix, gapopen, gapext)
             
-            return render(request, 'base/result.html', {'algo': result_from_algo, 'ebi': result_from_ebi})
+            return render(request, 'base/result.html', {'algo_results': result_from_algo, 'ebi': result_from_ebi})
     else:
         form = SeqForm()
         
@@ -131,7 +131,7 @@ def home(request):
             #EBI
             result_from_ebi = ebi.run(seq1, seq2, savedForm.seqtype, savedForm.matrix, gapopen, gapext)
             
-            return render(request, 'base/result.html', {'algo': result_from_algo, 'ebi': result_from_ebi})
+            return render(request, 'base/result.html', {'algo_results': result_from_algo, 'ebi': result_from_ebi})
     else:
         form = SeqForm()
         
