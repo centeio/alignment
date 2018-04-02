@@ -1,45 +1,71 @@
-{% load static %}
-{% load compress %}
+{% load static %} {% load compress %}
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="{% block meta_description %}{% endblock %}">
-    <meta name="author" content="{% block meta_author %}{% endblock %}">
-    
-    <title>{% block page_title %}SAAT{% endblock %}</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="{% block meta_description %}{% endblock %}">
+  <meta name="author" content="{% block meta_author %}{% endblock %}">
+
+  <title>{% block page_title %}SAAT{% endblock %}</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+    crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
 </head>
 
 <body>
-{% block body %}
+  {% block body %}
 
-  <!-- <nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-      <div class="navbar-header">
-        <a class="navbar-brand" href="/">Super Awesome Alignment Tool</a>
-      </div>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light mb1em">
+    <a class="navbar-brand" href="/">SAAT</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li {% if "/" == request.path %}class="nav-item active" {% else  %} class="nav-item" {% endif%}>
+          <a class="nav-link" href="/">Global (affine)
+            <span class="sr-only">(current)</span>
+          </a>
+          </li>
+          <li {% if "globallinear" in request.path %}class="nav-item active" {% else  %} class="nav-item" {% endif%}>
+            <a class="nav-link" href="/globallinear/">Global (linear)</a>
+          </li>
+          <li {% if "globalmultiples" in request.path %}class="nav-item active" {% else  %} class="nav-item" {% endif%}>
+            <a class="nav-link" href="/globalmultiples/">2 Alignments</a>
+          </li>
+          <li {% if "local" in request.path %}class="nav-item active" {% else  %} class="nav-item" {% endif%}>
+            <a class="nav-link" href="/local/">Local</a>
+          </li>
+      </ul>
     </div>
-  </nav> -->
+  </nav>
 
-  <div class="container-fluid">
+  <div class="container-fluid mb1em">
     {% block content %}{% endblock %}
   </div>
 
+  <nav class="navbar navbar-light bg-light">
+    <span class="navbar-text text-center">
+      Developed by Carolina Centeio, Eduarda Almeida and Higor Anjos.
+    </span>
+  </nav>
+
   {% compress js %}
-    <script src="{% static 'js/app.js' %}"></script>
-  {% endcompress %}
+  <script src="{% static 'js/app.js' %}"></script> {% endcompress %}
 
   <!-- Asynchronous Google Analytics snippet. Change UA-XXXXX-X to be your site's ID -->
   <script>
-    var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
-    (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-    g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
-    s.parentNode.insertBefore(g,s)}(document,'script'));
-  </script>
-{% endblock %}
+    var _gaq = [['_setAccount', 'UA-XXXXX-X'], ['_trackPageview']];
+    (function (d, t) {
+      var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
+      g.src = ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js';
+      s.parentNode.insertBefore(g, s)
+    }(document, 'script'));
+  </script> {% endblock %}
 </body>
+
 </html>

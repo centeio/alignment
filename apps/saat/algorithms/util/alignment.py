@@ -4,8 +4,8 @@ matrix_dict =   { 1: BLOSUM62, 2: DNAfull, 3: PAM250}
 
 
 class Parameters:
-    def __init__(self, gap=-0.5, gapopen=-10, matrix=1, stype='protein'):
-        self.gap = gap
+    def __init__(self, gapext=-0.5, gapopen=-10, matrix=1, stype='protein'):
+        self.gapext = gapext
         self.gapopen = gapopen
         self.matrix = matrix_dict[matrix]
         self.stype = stype
@@ -15,8 +15,8 @@ class Parameters:
         return self.matrix[a][b]
 
     def __str__(self):
-        return "matrix = {}\nmatrix = {}\nstype = {}\ngap = {}\ngapext = {}".format(
-            self.matrix, self.stype, self.gap, self.gapext
+        return "matrix = {}\nmatrix = {}\nstype = {}\ngapopen = {}\ngapext = {}".format(
+            self.matrix, self.stype, self.gapopen, self.gapext
             )
 
 

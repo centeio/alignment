@@ -15,6 +15,9 @@ DEBUG = False
 
 
 class AffineGlobal():
+    def __init__(self,multiples=False):
+        self.multiples = multiples
+
     def affine_global_align(self,seq1, seq2, Parameters=Parameters()):
         M = create_matrix(len(seq1), len(seq2))
         Ix = create_matrix(len(seq1), len(seq2))
@@ -25,11 +28,11 @@ class AffineGlobal():
         for i in range(0, len(seq1)+1):
             for j in range(0, len(seq2)+1):
                 if i==0:
-                    Iy[i][j] = Parameters.gapopen + (Parameters.gap*j)
+                    Iy[i][j] = Parameters.gapopen + (Parameters.gapext*j)
                     Ix[i][j] = -INF
                     M[i][j] = - INF
                 if j==0:
-                    Ix[i][j] = Parameters.gapopen + (Parameters.gap*i)
+                    Ix[i][j] = Parameters.gapopen + (Parameters.gapext*i)
                     Iy[i][j] = -INF
                     M[i][j] = - INF
 
@@ -51,13 +54,13 @@ class AffineGlobal():
                     )
 
                     Ix[i][j] = max (
-                        M[i-1][j] + Parameters.gapopen + Parameters.gap,
-                        Ix[i-1][j] + Parameters.gap
+                        M[i-1][j] + Parameters.gapopen + Parameters.gapext,
+                        Ix[i-1][j] + Parameters.gapext
                     )
 
                     Iy[i][j] = max (
-                        M[i][j-1] + Parameters.gapopen + Parameters.gap,
-                        Iy[i][j-1] + Parameters.gap
+                        M[i][j-1] + Parameters.gapopen + Parameters.gapext,
+                        Iy[i][j-1] + Parameters.gapext
                     )
 
         if (DEBUG):
@@ -120,10 +123,10 @@ class AffineGlobal():
                 alignedseq2 = alignedseq2 + "-"
                 alignedseq1 = alignedseq1 + seq1[i-1]
 
-                if Ix[i][j] == M[i-1][j] + Parameters.gapopen + Parameters.gap:
+                if Ix[i][j] == M[i-1][j] + Parameters.gapopen + Parameters.gapext:
                     matrix = "M"
                     
-                elif Ix[i][j] == Ix[i-1][j] + Parameters.gap:
+                elif Ix[i][j] == Ix[i-1][j] + Parameters.gapext:
                     matrix = "Ix"
 
                     
@@ -133,10 +136,10 @@ class AffineGlobal():
                 alignedseq1 = alignedseq1 + '-'
                 alignedseq2 = alignedseq2 + seq2[j-1]
 
-                if Iy[i][j] == M[i][j-1] + Parameters.gapopen + Parameters.gap:
+                if Iy[i][j] == M[i][j-1] + Parameters.gapopen + Parameters.gapext:
                     matrix = "M"
                     
-                elif Iy[i][j] == Iy[i][j-1] + Parameters.gap:
+                elif Iy[i][j] == Iy[i][j-1] + Parameters.gapext:
                     matrix = "Iy"
             
                 j = j-1
