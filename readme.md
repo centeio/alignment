@@ -8,9 +8,9 @@ SUPER AWESOME ALIGNMENT TOOL
 
 ## Quickstart ##
 
-Make sure to have python3 installed. Go to main folder and run:
+Make sure to have python3 e pip3 installed. Go to main folder and run:
 
-    pip install requirements.txt
+    pip3 install -r requirements.txt
 
 Once everything is installed you can run the development server: [http://localhost:8000/](http://localhost:8000/)
 
