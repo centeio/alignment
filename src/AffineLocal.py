@@ -142,7 +142,7 @@ def traceback_left(M, Ix, Iy , seq1, seq2, Parameters, maxmatrix, li, lj):
             alignedseq1 = alignedseq1 + seq1[i-1]
 
             if(M[i][j] == 0):
-                break;
+                break
 
             score = Parameters.score(seq1[i-1],seq2[j-1])
 
@@ -167,7 +167,7 @@ def traceback_left(M, Ix, Iy , seq1, seq2, Parameters, maxmatrix, li, lj):
             alignedseq1 = alignedseq1 + seq1[i-1]
 
             if(Ix[i][j] == 0):
-                break;
+                break
                 
             if Ix[i][j] == Ix[i-1][j] + Parameters.gap:
                 matrix = "Ix"
@@ -182,7 +182,7 @@ def traceback_left(M, Ix, Iy , seq1, seq2, Parameters, maxmatrix, li, lj):
             alignedseq2 = alignedseq2 + seq2[j-1]
 
             if(Iy[i][j] == 0):
-                break;
+                break
 
             if Iy[i][j] == M[i][j-1] + Parameters.gapopen + Parameters.gap:
                 matrix = "M"
@@ -221,7 +221,7 @@ def traceback_up(M, Ix, Iy , seq1, seq2, Parameters, maxmatrix, li, lj):
             alignedseq1 = alignedseq1 + seq1[i-1]
 
             if(M[i][j] == 0):
-                break;
+                break
 
             score = Parameters.score(seq1[i-1],seq2[j-1])
 
@@ -246,7 +246,7 @@ def traceback_up(M, Ix, Iy , seq1, seq2, Parameters, maxmatrix, li, lj):
             alignedseq1 = alignedseq1 + seq1[i-1]
 
             if(Ix[i][j] == 0):
-                break;
+                break
 
             if Ix[i][j] == M[i-1][j] + Parameters.gapopen + Parameters.gap:
                 matrix = "M"
@@ -261,7 +261,7 @@ def traceback_up(M, Ix, Iy , seq1, seq2, Parameters, maxmatrix, li, lj):
             alignedseq2 = alignedseq2 + seq2[j-1]
 
             if(Iy[i][j] == 0):
-                break;
+                break
                 
             if Iy[i][j] == Iy[i][j-1] + Parameters.gap:
                 matrix = "Iy"
