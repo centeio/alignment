@@ -11,6 +11,7 @@ django-compressor = "*"
 bcrypt = "*"
 requests = "==2.18.4"
 gunicorn = "*"
+whitenoise = "*"
 
 [dev-packages]
 django-debug-toolbar = "*"

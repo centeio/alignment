@@ -31,18 +31,20 @@ EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 
 
-# DATABASE SETTINGS
-# https://docs.djangoproject.com/en/1.10/ref/settings/#databases
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.',
-#         'NAME': '',
-#         'USER': '',
-#         'PASSWORD': '',
-#         'HOST': '',
-#         'PORT': '',
-#     },
-# }
+
+
+# MIDDLEWARE SETTINGS
+# See: https://docs.djangoproject.com/en/2.0/ref/settings/#middleware
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware'
+]
 
 # IMPORTANT!:
 # You must keep this secret, you can store it in an
@@ -64,11 +66,13 @@ MANAGERS = ADMINS
 
 COMPRESS_ENABLED = os.environ.get('COMPRESS_ENABLED', False) 
 
-# DJANGO-COMPRESSOR SETTINGS
-# STATICFILES_FINDERS = STATICFILES_FINDERS + (
-#     'compressor.finders.CompressorFinder',
-# )
+
 ALLOWED_HOSTS = ['localhost', '.herokuapp.com']
+
+# Simplified static file serving.
+# https://warehouse.python.org/project/whitenoise/
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 try:
     from local_settings import * # noqa
