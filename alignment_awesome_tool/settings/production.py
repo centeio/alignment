@@ -68,7 +68,7 @@ COMPRESS_ENABLED = os.environ.get('COMPRESS_ENABLED', False)
 # STATICFILES_FINDERS = STATICFILES_FINDERS + (
 #     'compressor.finders.CompressorFinder',
 # )
-ALLOWED_HOSTS = ['localhost', 'www.saat.herokuapp.com']
+ALLOWED_HOSTS = ['localhost', '.herokuapp.com']
 
 try:
     from local_settings import * # noqa
