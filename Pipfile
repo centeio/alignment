@@ -12,6 +12,7 @@ django = "==2.0"
 django-compressor = "*"
 "psycopg2" = "*"
 bcrypt = "*"
+requests = "==2.18.4"
 
 
 [dev-packages]
