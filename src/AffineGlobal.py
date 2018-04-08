@@ -229,7 +229,7 @@ if __name__ == '__main__':
     par = Parameters(gapopen=-10,gap=-0.5,matrix='BLOSUM62',stype='protein')
 
     #Sequencias
-    seq1=io.read_fasta(io.read_file("../inputs/default2.fasta"))
+    seq1=io.read_fasta(io.read_file("../inputs/default1.fasta"))
     seq2=io.read_fasta(io.read_file("../inputs/default2.fasta"))
     
     #Matriz de apontadores

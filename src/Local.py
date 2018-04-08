@@ -125,11 +125,11 @@ def traceback(M,seq1,seq2,i,j,Parameters):
 if __name__ == '__main__':
 
     #Definicoes dos parametros
-    par = Parameters(gap=-10,matrix='DNAFULL',stype='dna')
+    par = Parameters(gap=-10,matrix='BLOSUM62',stype='dna')
 
     
-    seq1=io.read_fasta(io.read_file("../inputs/NM_002688.fasta"))
-    seq2=io.read_fasta(io.read_file("../inputs/XM_001166286.fasta"))
+    seq1=io.read_fasta(io.read_file("../inputs/default1.fasta"))
+    seq2=io.read_fasta(io.read_file("../inputs/default2.fasta"))
     
     matrix, i, j = local_align(seq1, seq2, par)
 
