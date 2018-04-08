@@ -1,3 +1,23 @@
+from .matrices import *
+
+matrix_dict =   { 'BLOSUM62': BLOSUM62, 'DNAFULL': DNAfull, 'PAM250': PAM250}
+
+class Parameters:
+    def __init__(self, gap=-0.5, gapopen=-10, matrix='BLOSUM62', stype='protein'):
+        self.gap = gap
+        self.gapopen = gapopen
+        self.matrix = matrix_dict[matrix]
+        self.stype = stype
+
+    def score(self, a, b):
+        assert len(a) == len(b) == 1 #assures that is just one letter
+        return self.matrix[a][b]
+
+    def __str__(self):
+        return "matrix = {}\nstype = {}\ngap = {}\ngapopen = {}".format(
+            self.matrix, self.stype, self.gap, self.gapopen
+            )
+
 class Alignment():
     def __init__(self, seq1, seq2, direction):
         self.seq1 = seq1
@@ -22,7 +42,7 @@ class Alignment():
                 
     
     def __str__(self):
-        return "[ALIGNMENT {}] \n\
+        return "\n[ALIGNMENT {}] \n\
         SEQ1: {} \n\
         SEQ2: {} \n\
         #gaps: {} \t #matches: {} \t #mismatches: {}".format(self.direction,self.seq1,self.seq2,self.gaps,self.matches,self.mismatches)

@@ -27,8 +27,8 @@ data = {"email":"up201711183@fc.up.pt",
     "endextend":"0.5",
     "format":"pair",
     "stype":"protein",
-    "asequence":io.read_file("../inputs/dummy1.fasta"),
-    "bsequence":io.read_file("../inputs/dummy2.fasta")
+    "asequence":io.read_file("../inputs/default1.fasta"),
+    "bsequence":io.read_file("../inputs/default2.fasta")
       }
     
 
@@ -47,7 +47,7 @@ def get_alignment(string):
     string1 = ''.join(string1) #join all items in a single string with '' sepring them
     string2 = ''.join(string2) #the same as above
     
-    result = Alignment(string1,string2)
+    result = Alignment(string1,string2,"DEFAULT")
     result.calculate_mat_mis_gaps()
     
     return result
@@ -79,7 +79,7 @@ if __name__ == '__main__':
 
     alignment = get_alignment(result.text)
 
-    io.write_file("../outputs/ebi_output.txt",str(alignment))
+    io.write_file("../outputs/ebi_global_output.txt",str(alignment))
     
     #print(str(alignment))
 

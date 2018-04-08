@@ -3,33 +3,12 @@
 import sys
 from util.matrices import *
 from util.alignment import Alignment
+from util.alignment import Parameters
 from util import io
 
 INF = sys.maxsize
 #INF = 1000
-DEBUG = True
-
-####################
-#### PARAMETERS ####
-####################
-
-matrix_dict =   { 'BLOSUM62': BLOSUM62, 'DNAFULL': DNAfull, 'PAM250': PAM250}
-
-class Parameters:
-    def __init__(self, gap=-0.5, gapopen=-10, matrix='BLOSUM62', stype='protein'):
-        self.gap = gap
-        self.gapopen = gapopen
-        self.matrix = matrix_dict[matrix]
-        self.stype = stype
-
-    def score(self, a, b):
-        assert len(a) == len(b) == 1 #assures that is just one letter
-        return self.matrix[a][b]
-
-    def __str__(self):
-        return "matrix = {}\nmatrix = {}\nstype = {}\ngap = {}\ngapext = {}".format(
-            self.matrix, self.stype, self.gap, self.gapext
-            )
+DEBUG = False
 
 ##########################
 #### LOCAL ALIGNMENT ####
@@ -215,7 +194,6 @@ def traceback_up(M, Ix, Iy , seq1, seq2, Parameters, maxmatrix, li, lj):
     matrix = maxmatrix
 
     while True:
-        print(matrix, i, j)
         if matrix == "M":
             alignedseq2 = alignedseq2 + seq2[j-1]
             alignedseq1 = alignedseq1 + seq1[i-1]
@@ -286,8 +264,8 @@ if __name__ == '__main__':
     par = Parameters(gapopen=-10,gap=-0.5,matrix='BLOSUM62',stype='protein')
 
     #Sequencias
-    seq1=io.read_fasta(io.read_file("../inputs/dummy1.fasta"))
-    seq2 =io.read_fasta(io.read_file("../inputs/dummy2.fasta"))
+    seq1=io.read_fasta(io.read_file("../inputs/default1.fasta"))
+    seq2 =io.read_fasta(io.read_file("../inputs/default2.fasta"))
     
     #Matriz de apontadores
     M, Ix, Iy, maxmatrix, li, lj = local_align(seq1, seq2, par)
@@ -297,11 +275,9 @@ if __name__ == '__main__':
     upalignedseq1, upalignedseq2 = traceback_up(M, Ix, Iy, seq1, seq2, par, maxmatrix, li, lj)
 
     result = Alignment(downalignedseq1,downalignedseq2, "LEFT")
-    result.calculate_mat_mis_gaps()
-    print(str(result))   
-    io.write_file("../outputs/locally_global_output.txt",str(result))
+    result.calculate_mat_mis_gaps() 
+    io.write_file("../outputs/locally_local_affine_output.txt",str(result))
 
     result = Alignment(upalignedseq1,upalignedseq2, "UP")
     result.calculate_mat_mis_gaps()
-    print(str(result))   
-    io.write_file("../outputs/locally_global_output.txt",str(result))
+    io.append_file("../outputs/locally_local_affine_output.txt",str(result))

@@ -1,0 +1,9 @@
+
+[ALIGNMENT LEFT] 
+        SEQ1: AAACLFF 
+        SEQ2: AAACLFF 
+        #gaps: 0 	 #matches: 7 	 #mismatches: 0
+[ALIGNMENT UP] 
+        SEQ1: AAACLFF 
+        SEQ2: AAACLFF 
+        #gaps: 0 	 #matches: 7 	 #mismatches: 0

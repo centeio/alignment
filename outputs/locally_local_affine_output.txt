@@ -1,0 +1,9 @@
+
+[ALIGNMENT LEFT] 
+        SEQ1: CLF 
+        SEQ2: CLF 
+        #gaps: 0 	 #matches: 3 	 #mismatches: 0
+[ALIGNMENT UP] 
+        SEQ1: CLF 
+        SEQ2: CLF 
+        #gaps: 0 	 #matches: 3 	 #mismatches: 0

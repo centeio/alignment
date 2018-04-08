@@ -1,46 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from BLOSUM62 import *
-from DNAfull import *
-from PAM250 import*
-
-########################
-#### UTIL FUNCTIONS ####
-########################
-
-def create_matrix(n,m):
-    """
-    Equivalent of
-    int[][]M = [n][m];
-    for (int i; i<n; i++){
-        for (int j; j<m; j++){
-            M[i][j] = 0;
-        }
-    }
-    """
-    return [[0]*(m+1) for i in range(n+1)]
-
-####################
-#### PARAMETERS ####
-####################
-
-matrix_dict =   { 'BLOSUM62': BLOSUM62, 'DNAFULL': DNAfull, 'PAM250': PAM250}
-
-class Parameters:
-    def __init__(self, gap=-2, matrix='BLOSUM62', stype='protein'):
-        self.gap = gap
-        self.matrix = matrix_dict[matrix]
-        self.stype = stype
-
-    def score(self, a, b):
-        assert len(a) == len(b) == 1 #assures that is just one letter
-        return self.matrix[a][b]
-
-    def __str__(self):
-        return "matrix = {}\nmatrix = {}\nstype = {}\ngap = {}\n".format(
-            self.matrix, self.stype, self.gap
-            )
+from util.alignment import Alignment
+from util.alignment import Parameters
+from util import io
+from util.matrices import create_matrix
 
 ##########################
 #### GLOBAL ALIGNMENT ####
@@ -67,7 +31,7 @@ def global_align(seq1, seq2, Parameters=Parameters()):
 
     return M
 
-def align(M,seq1,seq2,Parameters):
+def traceback(M,seq1,seq2,Parameters):
     """
     Esta funcao encontra o melhor aliamente seguindo o algoritmo a seguir:
 
@@ -151,28 +115,6 @@ def align(M,seq1,seq2,Parameters):
 
     return alignedseq1, alignedseq2
 
-def print_matrix(seq1, seq2, M):
-    """
-    This function prints the matrix along with sequences
-    Example:
-              A     A     A
-        C     0     0     0
-        C     0     0     0
-        C     0     0     0
-    """
-    # print the empty space
-    # print the top row
-    print(" ", end="\t")
-    for c in seq1:
-        print(c, end="\t")
-    print("")
-
-    # print the remaining
-    for j in range(len(M[0])):
-        print(seq2[j], end="\t")
-        for i in range(len(M)):
-            print(M[i][j], end="\t")
-        print("")
 
 
 
@@ -180,23 +122,15 @@ if __name__ == '__main__':
     #Definicoes dos parametros
     par = Parameters(gap=-10,matrix='BLOSUM62',stype='protein')
 
-    #Sequencias
-    #>tr|B7Z8R9|B7Z8R9_HUMAN cDNA FLJ57474, highly similar to Homo sapiens plasticity
-    # related gene 3 (PRG-3), transcript variant 1, mRNA OS=Homo sapiens PE=2 SV=1
-    #seq1 = "MAGTVLLAYYFECTDTFQVHIQGFFCQDGDLMKPYPGTEEESFITPLVLYCVLAATPTAIIFIGEISMYFIKSTRESLIAQEKTILTGECCYLNPLLRRIIRFTGVFAFGLFATDIFVNAGQVVTGHLTPYFLTVCKPNYTSADCQAHHQFINNGNICTGDLEVIEKARRSFPSKHAALSIYSALYATMYITSTIKTKSSRLAKPVLCLGTLCTAFLTGLNRVSEYRNHCSDVIAGFILGTAVALFLGMCVVHNFKGTQGSPSKPKPEDPRGVPLMAFPRIESPLETLSAQNHSASMTEVT"
-    #>random sequence 1 consisting of 20 residues.
-    seq1="MVLSPADKTNVKAAWGKVGAHAGEYGAEALERMFLSFPTTKTYFPHFDLSHGSAQVKGHGKKVADALTNAVAHVDDMPNALSALSDLHAHKLRVDPVNFKLLSHCLLVTLAAHLPAEFTPAVHASLDKFLASVSTVLTSKYR"
-
-    #>sp|Q9Y2Y8|PRG3_HUMAN Proteoglycan 3 OS=Homo sapiens GN=PRG3 PE=1 SV=2
-    # seq2 = "MQCLLLLPFLLLGTVSALHLENDAPHLESLETQADLGQDLDSSKEQERDLALTEEVIQAEGEEVKASACQDNFEDEEAMESDPAALDKDFQCPREEDIVEVQGSPRCKICRYLLVRTPKTFAEAQNVCSRCYGGNLVSIHDFNFNYRIQCCTSTVNQAQVWIGGNLRGWFLWKRFCWTDGSHWNFAYWSPGQPGNGQGSCVALCTKGGYWRRAQCDKQLPFVCSF"
-    seq2 = "MVLSGEDKSNIKAAWGKIGGHGAEYGAEALERMFASFPTTKTYFPHFDVSHGSAQVKGHGKKVADALASAAGHLDDLPGALSALSDLHAHKLRVDPVNFKLLSHCLLVTLASHHPADFTPAVHASLDKFLASVSTVLTSKYR"
-    #seq1 = "AAACGC"
-    #seq2 = "ACACGC"
-    #Matriz
+    
+    seq1=io.read_fasta(io.read_file("../inputs/NM_002688.fasta"))
+    seq2=io.read_fasta(io.read_file("../inputs/XM_001166286.fasta"))
+    
     matrix = global_align(seq1, seq2, par)
-    #print_matrix("_"+seq1,"_"+seq2,matrix)
-    #Sequencias alinhadas
-    alignedseq1, alignedseq2 = align(matrix, seq1, seq2, par)
 
-    print(alignedseq1)
-    print(alignedseq2)
+    alignedseq1, alignedseq2 = traceback(matrix, seq1, seq2, par)
+
+    result = Alignment(alignedseq1,alignedseq2, "DEFAULT")
+    result.calculate_mat_mis_gaps()
+
+    io.write_file("../outputs/locally_global_linear_output.txt",str(result))

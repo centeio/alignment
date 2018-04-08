@@ -15,21 +15,31 @@ Sequence Alignment for Bioinformatica (Project 1)
 alignment
 ├── inputs
 │   ├── B7Z8R9.fasta
-│   ├── dummy1.fasta
-│   ├── dummy2.fasta
-│   └── Q9Y2Y8.fasta
+│   ├── default1.fasta
+│   ├── default2.fasta
+│   ├── NM_002688.fasta
+│   ├── NP_002679.fasta
+│   ├── Q9Y2Y8.fasta
+│   ├── XM_001166286.fasta
+│   └── XP_009215056.fasta
 ├── log
 │   └── run_on_ebi.log
 ├── outputs
-│   ├── ebi_output.txt
-│   └── local_output.txt
+│   ├── ebi_global_output.txt
+│   ├── ebi_local_output.txt
+│   ├── locally_global_affine_output.txt
+│   ├── locally_global_linear_output.txt
+│   ├── locally_local_affine_output.txt
+│   └── locally_local_linear_output.txt
 ├── README.md
 ├── requirements.txt
 └── src
+    ├── AffineGlobal.py
+    ├── AffineLocal.py
+    ├── GlobalEBI.py
     ├── Global.py
+    ├── LocalEBI.py
     ├── Local.py
-    ├── run_local.py
-    ├── run_on_ebi.py
     └── util
         ├── alignment.py
         ├── __init__.py
@@ -51,12 +61,12 @@ For testing our implementation:
 
 ```
     # cd src/
-    $ python3 run_local.py
+    $ python3 {file}.py
 ```
 
 It will (by default), look for dummy1 and dummy2 fasta files on `inputs` directory. You can either replace the content of these two files with your sequences or change the code to read from another file. To do so, you must change these lines of code:
 
-`run_local.py`
+`{file}.py`
 ```python
 153     
 154        #Sequencias
@@ -65,9 +75,9 @@ It will (by default), look for dummy1 and dummy2 fasta files on `inputs` directo
 157    
 ```
 
-This code will produce the alignment in the `local_output.txt` file inside outputs directory, as shown:
+This code will produce the alignment in the `{output}.txt` file inside outputs directory, as shown:
 
-`local_output.txt`
+`{output}.txt`
 ```
 [ALIGNMENT] 
         SEQ1: C---LF- 
@@ -79,7 +89,7 @@ This code will produce the alignment in the `local_output.txt` file inside outpu
 
 For testing this code, you must provide all the data needed inside the file `run_on_ebi.py`. The input works exactly as above. If you want to change the parameters, just changes the following part:
 
-`run_on_ebi.py`
+`{ebi}.py`
 ```python
 19
 20      #EXAMPLE OF REQUEST
@@ -98,7 +108,7 @@ For testing this code, you must provide all the data needed inside the file `run
 33    
 ```
 
-This code will produce the alignment in the `ebi_output.txt` file inside outputs directory.
+This code will produce the alignment in the `{ebi_output}.txt` file inside outputs directory.
 
 #### Resources:
 [EMBOSS NEEDLE alignment tool by EBI](https://www.ebi.ac.uk/Tools/psa/emboss_needle/)

@@ -765,3 +765,485 @@ DUMMY_TEST_2       1 AAACLFF      7
 #---------------------------------------
 #---------------------------------------
 ...
+INFO:root:----------
+
+INFO:root:[2018-04-08 22:34:09.741447] Requesting the URL = http://www.ebi.ac.uk/Tools/services/rest/emboss_water/run/...
+INFO:root:[2018-04-08 22:34:12.729745] Request made and the code returned was 200
+INFO:root:Nome do job gerado = emboss_water-R20180408-223410-0676-10725978-pg
+INFO:root:[2018-04-08 22:34:12.730384] Requesting the URL = http://www.ebi.ac.uk/Tools/services/rest/emboss_water/result/...
+INFO:root:[2018-04-08 22:34:15.182844] Result not ready yet...
+INFO:root:[2018-04-08 22:34:15.183237] Requesting the URL = http://www.ebi.ac.uk/Tools/services/rest/emboss_water/result/...
+INFO:root:[2018-04-08 22:34:17.639100] Result not ready yet...
+INFO:root:[2018-04-08 22:34:17.639307] Requesting the URL = http://www.ebi.ac.uk/Tools/services/rest/emboss_water/result/...
+INFO:root:[2018-04-08 22:34:19.797103] Result not ready yet...
+INFO:root:[2018-04-08 22:34:19.797349] Requesting the URL = http://www.ebi.ac.uk/Tools/services/rest/emboss_water/result/...
+INFO:root:[2018-04-08 22:34:20.067858] Results got = ########################################
+# Program: water
+# Rundate: Sun  8 Apr 2018 22:34:15
+# Commandline: water
+#    -auto
+#    -stdout
+#    -asequence emboss_water-R20180408-223410-0676-10725978-pg.asequence
+#    -bsequence emboss_water-R20180408-223410-0676-10725978-pg.bsequence
+#    -datafile EBLOSUM62
+#    -gapopen 10.0
+#    -gapextend 0.5
+#    -aformat3 pair
+#    -sprotein1
+#    -sprotein2
+# Align_format: pair
+# Report_file: stdout
+########################################
+
+#=======================================
+#
+# Aligned_sequences: 2
+# 1: DUMMY_TEST_1
+# 2: DUMMY_TEST_2
+# Matrix: EBLOSUM62
+# Gap_penalty: 10.0
+# Extend_penalty: 0.5
+#
+# Length: 3
+# Identity:       3/3 (100.0%)
+# Similarity:     3/3 (100.0%)
+# Gaps:           0/3 ( 0.0%)
+# Score: 19.0
+# 
+#
+#=======================================
+
+DUMMY_TEST_1       1 CLF      3
+                     |||
+DUMMY_TEST_2       4 CLF      6
+
+
+#---------------------------------------
+#---------------------------------------
+...
+INFO:root:----------
+
+INFO:root:[2018-04-08 22:37:24.221961] Requesting the URL = http://www.ebi.ac.uk/Tools/services/rest/emboss_water/run/...
+INFO:root:[2018-04-08 22:37:26.879822] Request made and the code returned was 200
+INFO:root:Nome do job gerado = emboss_water-R20180408-223724-0803-25883107-p2m
+INFO:root:[2018-04-08 22:37:26.880256] Requesting the URL = http://www.ebi.ac.uk/Tools/services/rest/emboss_water/result/...
+INFO:root:[2018-04-08 22:37:29.334904] Result not ready yet...
+INFO:root:[2018-04-08 22:37:29.335202] Requesting the URL = http://www.ebi.ac.uk/Tools/services/rest/emboss_water/result/...
+INFO:root:[2018-04-08 22:37:31.825259] Result not ready yet...
+INFO:root:[2018-04-08 22:37:31.825511] Requesting the URL = http://www.ebi.ac.uk/Tools/services/rest/emboss_water/result/...
+INFO:root:[2018-04-08 22:37:32.343220] Results got = ########################################
+# Program: water
+# Rundate: Sun  8 Apr 2018 22:37:26
+# Commandline: water
+#    -auto
+#    -stdout
+#    -asequence emboss_water-R20180408-223724-0803-25883107-p2m.asequence
+#    -bsequence emboss_water-R20180408-223724-0803-25883107-p2m.bsequence
+#    -datafile EBLOSUM62
+#    -gapopen 10.0
+#    -gapextend 0.5
+#    -aformat3 pair
+#    -sprotein1
+#    -sprotein2
+# Align_format: pair
+# Report_file: stdout
+########################################
+
+#=======================================
+#
+# Aligned_sequences: 2
+# 1: DUMMY_TEST_1
+# 2: DUMMY_TEST_2
+# Matrix: EBLOSUM62
+# Gap_penalty: 10.0
+# Extend_penalty: 0.5
+#
+# Length: 3
+# Identity:       3/3 (100.0%)
+# Similarity:     3/3 (100.0%)
+# Gaps:           0/3 ( 0.0%)
+# Score: 19.0
+# 
+#
+#=======================================
+
+DUMMY_TEST_1       1 CLF      3
+                     |||
+DUMMY_TEST_2       4 CLF      6
+
+
+#---------------------------------------
+#---------------------------------------
+...
+INFO:root:----------
+
+INFO:root:[2018-04-08 22:39:55.068007] Requesting the URL = http://www.ebi.ac.uk/Tools/services/rest/emboss_needle/run/...
+INFO:root:[2018-04-08 22:39:57.723392] Request made and the code returned was 200
+INFO:root:Nome do job gerado = emboss_needle-R20180408-223955-0699-15009469-pg
+INFO:root:[2018-04-08 22:39:57.724984] Requesting the URL = http://www.ebi.ac.uk/Tools/services/rest/emboss_needle/result/...
+INFO:root:[2018-04-08 22:40:00.171636] Result not ready yet...
+INFO:root:[2018-04-08 22:40:00.172002] Requesting the URL = http://www.ebi.ac.uk/Tools/services/rest/emboss_needle/result/...
+INFO:root:[2018-04-08 22:40:00.686923] Results got = ########################################
+# Program: needle
+# Rundate: Sun  8 Apr 2018 22:39:56
+# Commandline: needle
+#    -auto
+#    -stdout
+#    -asequence emboss_needle-R20180408-223955-0699-15009469-pg.asequence
+#    -bsequence emboss_needle-R20180408-223955-0699-15009469-pg.bsequence
+#    -datafile EBLOSUM62
+#    -gapopen 10.0
+#    -gapextend 0.5
+#    -endopen 10.0
+#    -endextend 0.5
+#    -aformat3 pair
+#    -sprotein1
+#    -sprotein2
+# Align_format: pair
+# Report_file: stdout
+########################################
+
+#=======================================
+#
+# Aligned_sequences: 2
+# 1: DUMMY_TEST_1
+# 2: DUMMY_TEST_2
+# Matrix: EBLOSUM62
+# Gap_penalty: 10.0
+# Extend_penalty: 0.5
+#
+# Length: 7
+# Identity:       3/7 (42.9%)
+# Similarity:     3/7 (42.9%)
+# Gaps:           4/7 (57.1%)
+# Score: 19.0
+# 
+#
+#=======================================
+
+DUMMY_TEST_1       1 ---CLF-      3
+                        ||| 
+DUMMY_TEST_2       1 AAACLFF      7
+
+
+#---------------------------------------
+#---------------------------------------
+...
+INFO:root:----------
+
+INFO:root:[2018-04-08 23:34:16.072506] Requesting the URL = http://www.ebi.ac.uk/Tools/services/rest/emboss_water/run/...
+INFO:root:[2018-04-08 23:34:19.047786] Request made and the code returned was 200
+INFO:root:Nome do job gerado = emboss_water-R20180408-233416-0717-16831037-pg
+INFO:root:[2018-04-08 23:34:19.050178] Requesting the URL = http://www.ebi.ac.uk/Tools/services/rest/emboss_water/result/...
+INFO:root:[2018-04-08 23:34:19.317233] Results got = ########################################
+# Program: water
+# Rundate: Sun  8 Apr 2018 23:34:17
+# Commandline: water
+#    -auto
+#    -stdout
+#    -asequence emboss_water-R20180408-233416-0717-16831037-pg.asequence
+#    -bsequence emboss_water-R20180408-233416-0717-16831037-pg.bsequence
+#    -datafile EBLOSUM62
+#    -gapopen 10.0
+#    -gapextend 0.5
+#    -aformat3 pair
+#    -sprotein1
+#    -sprotein2
+# Align_format: pair
+# Report_file: stdout
+########################################
+
+#=======================================
+#
+# Aligned_sequences: 2
+# 1: DUMMY_TEST_1
+# 2: DUMMY_TEST_2
+# Matrix: EBLOSUM62
+# Gap_penalty: 10.0
+# Extend_penalty: 0.5
+#
+# Length: 3
+# Identity:       3/3 (100.0%)
+# Similarity:     3/3 (100.0%)
+# Gaps:           0/3 ( 0.0%)
+# Score: 19.0
+# 
+#
+#=======================================
+
+DUMMY_TEST_1       1 CLF      3
+                     |||
+DUMMY_TEST_2       4 CLF      6
+
+
+#---------------------------------------
+#---------------------------------------
+...
+INFO:root:----------
+
+INFO:root:[2018-04-08 23:34:20.082648] Requesting the URL = http://www.ebi.ac.uk/Tools/services/rest/emboss_needle/run/...
+INFO:root:[2018-04-08 23:34:23.032213] Request made and the code returned was 200
+INFO:root:Nome do job gerado = emboss_needle-R20180408-233420-0669-73924077-pg
+INFO:root:[2018-04-08 23:34:23.032994] Requesting the URL = http://www.ebi.ac.uk/Tools/services/rest/emboss_needle/result/...
+INFO:root:[2018-04-08 23:34:23.505894] Results got = ########################################
+# Program: needle
+# Rundate: Sun  8 Apr 2018 23:34:21
+# Commandline: needle
+#    -auto
+#    -stdout
+#    -asequence emboss_needle-R20180408-233420-0669-73924077-pg.asequence
+#    -bsequence emboss_needle-R20180408-233420-0669-73924077-pg.bsequence
+#    -datafile EBLOSUM62
+#    -gapopen 10.0
+#    -gapextend 0.5
+#    -endopen 10.0
+#    -endextend 0.5
+#    -aformat3 pair
+#    -sprotein1
+#    -sprotein2
+# Align_format: pair
+# Report_file: stdout
+########################################
+
+#=======================================
+#
+# Aligned_sequences: 2
+# 1: DUMMY_TEST_1
+# 2: DUMMY_TEST_2
+# Matrix: EBLOSUM62
+# Gap_penalty: 10.0
+# Extend_penalty: 0.5
+#
+# Length: 7
+# Identity:       3/7 (42.9%)
+# Similarity:     3/7 (42.9%)
+# Gaps:           4/7 (57.1%)
+# Score: 19.0
+# 
+#
+#=======================================
+
+DUMMY_TEST_1       1 ---CLF-      3
+                        ||| 
+DUMMY_TEST_2       1 AAACLFF      7
+
+
+#---------------------------------------
+#---------------------------------------
+...
+INFO:root:----------
+
+INFO:root:[2018-04-08 23:37:03.412932] Requesting the URL = http://www.ebi.ac.uk/Tools/services/rest/emboss_water/run/...
+INFO:root:[2018-04-08 23:37:05.863210] Request made and the code returned was 200
+INFO:root:Nome do job gerado = emboss_water-R20180408-233703-0673-22725920-p2m
+INFO:root:[2018-04-08 23:37:05.864163] Requesting the URL = http://www.ebi.ac.uk/Tools/services/rest/emboss_water/result/...
+INFO:root:[2018-04-08 23:37:08.307765] Result not ready yet...
+INFO:root:[2018-04-08 23:37:08.309726] Requesting the URL = http://www.ebi.ac.uk/Tools/services/rest/emboss_water/result/...
+INFO:root:[2018-04-08 23:37:11.503242] Results got = ########################################
+# Program: water
+# Rundate: Sun  8 Apr 2018 23:37:05
+# Commandline: water
+#    -auto
+#    -stdout
+#    -asequence emboss_water-R20180408-233703-0673-22725920-p2m.asequence
+#    -bsequence emboss_water-R20180408-233703-0673-22725920-p2m.bsequence
+#    -datafile EBLOSUM62
+#    -gapopen 10.0
+#    -gapextend 0.5
+#    -aformat3 pair
+#    -sprotein1
+#    -sprotein2
+# Align_format: pair
+# Report_file: stdout
+########################################
+
+#=======================================
+#
+# Aligned_sequences: 2
+# 1: DUMMY_TEST_1
+# 2: DUMMY_TEST_2
+# Matrix: EBLOSUM62
+# Gap_penalty: 10.0
+# Extend_penalty: 0.5
+#
+# Length: 3
+# Identity:       3/3 (100.0%)
+# Similarity:     3/3 (100.0%)
+# Gaps:           0/3 ( 0.0%)
+# Score: 19.0
+# 
+#
+#=======================================
+
+DUMMY_TEST_1       1 CLF      3
+                     |||
+DUMMY_TEST_2       4 CLF      6
+
+
+#---------------------------------------
+#---------------------------------------
+...
+INFO:root:----------
+
+INFO:root:[2018-04-08 23:37:12.421696] Requesting the URL = http://www.ebi.ac.uk/Tools/services/rest/emboss_needle/run/...
+INFO:root:[2018-04-08 23:37:15.287848] Request made and the code returned was 200
+INFO:root:Nome do job gerado = emboss_needle-R20180408-233713-0214-17051974-pg
+INFO:root:[2018-04-08 23:37:15.288589] Requesting the URL = http://www.ebi.ac.uk/Tools/services/rest/emboss_needle/result/...
+INFO:root:[2018-04-08 23:37:17.525404] Result not ready yet...
+INFO:root:[2018-04-08 23:37:17.527163] Requesting the URL = http://www.ebi.ac.uk/Tools/services/rest/emboss_needle/result/...
+INFO:root:[2018-04-08 23:37:19.765074] Result not ready yet...
+INFO:root:[2018-04-08 23:37:19.765642] Requesting the URL = http://www.ebi.ac.uk/Tools/services/rest/emboss_needle/result/...
+INFO:root:[2018-04-08 23:37:20.085112] Results got = ########################################
+# Program: needle
+# Rundate: Sun  8 Apr 2018 23:37:14
+# Commandline: needle
+#    -auto
+#    -stdout
+#    -asequence emboss_needle-R20180408-233713-0214-17051974-pg.asequence
+#    -bsequence emboss_needle-R20180408-233713-0214-17051974-pg.bsequence
+#    -datafile EBLOSUM62
+#    -gapopen 10.0
+#    -gapextend 0.5
+#    -endopen 10.0
+#    -endextend 0.5
+#    -aformat3 pair
+#    -sprotein1
+#    -sprotein2
+# Align_format: pair
+# Report_file: stdout
+########################################
+
+#=======================================
+#
+# Aligned_sequences: 2
+# 1: DUMMY_TEST_1
+# 2: DUMMY_TEST_2
+# Matrix: EBLOSUM62
+# Gap_penalty: 10.0
+# Extend_penalty: 0.5
+#
+# Length: 7
+# Identity:       3/7 (42.9%)
+# Similarity:     3/7 (42.9%)
+# Gaps:           4/7 (57.1%)
+# Score: 19.0
+# 
+#
+#=======================================
+
+DUMMY_TEST_1       1 ---CLF-      3
+                        ||| 
+DUMMY_TEST_2       1 AAACLFF      7
+
+
+#---------------------------------------
+#---------------------------------------
+...
+INFO:root:----------
+
+INFO:root:[2018-04-08 23:44:23.055921] Requesting the URL = http://www.ebi.ac.uk/Tools/services/rest/emboss_water/run/...
+INFO:root:[2018-04-08 23:44:25.480243] Request made and the code returned was 200
+INFO:root:Nome do job gerado = emboss_water-R20180408-234423-0416-49266969-p1m
+INFO:root:[2018-04-08 23:44:25.481120] Requesting the URL = http://www.ebi.ac.uk/Tools/services/rest/emboss_water/result/...
+INFO:root:[2018-04-08 23:44:27.911857] Result not ready yet...
+INFO:root:[2018-04-08 23:44:27.912290] Requesting the URL = http://www.ebi.ac.uk/Tools/services/rest/emboss_water/result/...
+INFO:root:[2018-04-08 23:44:28.296756] Results got = ########################################
+# Program: water
+# Rundate: Sun  8 Apr 2018 23:44:25
+# Commandline: water
+#    -auto
+#    -stdout
+#    -asequence emboss_water-R20180408-234423-0416-49266969-p1m.asequence
+#    -bsequence emboss_water-R20180408-234423-0416-49266969-p1m.bsequence
+#    -datafile EBLOSUM62
+#    -gapopen 10.0
+#    -gapextend 0.5
+#    -aformat3 pair
+#    -sprotein1
+#    -sprotein2
+# Align_format: pair
+# Report_file: stdout
+########################################
+
+#=======================================
+#
+# Aligned_sequences: 2
+# 1: DUMMY_TEST_1
+# 2: DUMMY_TEST_2
+# Matrix: EBLOSUM62
+# Gap_penalty: 10.0
+# Extend_penalty: 0.5
+#
+# Length: 3
+# Identity:       3/3 (100.0%)
+# Similarity:     3/3 (100.0%)
+# Gaps:           0/3 ( 0.0%)
+# Score: 19.0
+# 
+#
+#=======================================
+
+DUMMY_TEST_1       1 CLF      3
+                     |||
+DUMMY_TEST_2       4 CLF      6
+
+
+#---------------------------------------
+#---------------------------------------
+...
+INFO:root:----------
+
+INFO:root:[2018-04-08 23:44:29.083688] Requesting the URL = http://www.ebi.ac.uk/Tools/services/rest/emboss_needle/run/...
+INFO:root:[2018-04-08 23:44:31.476845] Request made and the code returned was 200
+INFO:root:Nome do job gerado = emboss_needle-R20180408-234429-0384-73932502-p1m
+INFO:root:[2018-04-08 23:44:31.478549] Requesting the URL = http://www.ebi.ac.uk/Tools/services/rest/emboss_needle/result/...
+INFO:root:[2018-04-08 23:44:33.657302] Result not ready yet...
+INFO:root:[2018-04-08 23:44:33.657958] Requesting the URL = http://www.ebi.ac.uk/Tools/services/rest/emboss_needle/result/...
+INFO:root:[2018-04-08 23:44:35.853864] Result not ready yet...
+INFO:root:[2018-04-08 23:44:35.854435] Requesting the URL = http://www.ebi.ac.uk/Tools/services/rest/emboss_needle/result/...
+INFO:root:[2018-04-08 23:44:37.132706] Results got = ########################################
+# Program: needle
+# Rundate: Sun  8 Apr 2018 23:44:32
+# Commandline: needle
+#    -auto
+#    -stdout
+#    -asequence emboss_needle-R20180408-234429-0384-73932502-p1m.asequence
+#    -bsequence emboss_needle-R20180408-234429-0384-73932502-p1m.bsequence
+#    -datafile EBLOSUM62
+#    -gapopen 10.0
+#    -gapextend 0.5
+#    -endopen 10.0
+#    -endextend 0.5
+#    -aformat3 pair
+#    -sprotein1
+#    -sprotein2
+# Align_format: pair
+# Report_file: stdout
+########################################
+
+#=======================================
+#
+# Aligned_sequences: 2
+# 1: DUMMY_TEST_1
+# 2: DUMMY_TEST_2
+# Matrix: EBLOSUM62
+# Gap_penalty: 10.0
+# Extend_penalty: 0.5
+#
+# Length: 7
+# Identity:       3/7 (42.9%)
+# Similarity:     3/7 (42.9%)
+# Gaps:           4/7 (57.1%)
+# Score: 19.0
+# 
+#
+#=======================================
+
+DUMMY_TEST_1       1 ---CLF-      3
+                        ||| 
+DUMMY_TEST_2       1 AAACLFF      7
+
+
+#---------------------------------------
+#---------------------------------------
+...

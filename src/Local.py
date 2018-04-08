@@ -1,73 +1,11 @@
-"""
-Python code for local alignment
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
-Usage:
-    local_align("AAA","AAC",Parameters(gap=-2,mismatch=-1,match=1))
-"""
 
-########################
-#### UTIL FUNCTIONS ####
-########################
-
-def create_matrix(n,m):
-    """
-    Equivalent of
-    int[][]M = [n][m];
-    for (int i; i<n; i++){
-        for (int j; j<m; j++){
-            M[i][j] = 0;
-        }
-    }
-    """
-    return [[0]*(m+1) for i in range(n+1)]
-
-def print_matrix(seq1, seq2, M):
-    """
-    This function prints the matrix along with sequences
-    Example:
-              A     A     A  
-        C     0     0     0
-        C     0     0     0
-        C     0     0     0
-    """
-    # print the empty space
-    print ("{}".format(" "),end=" ")
-    # print the top row
-    for c in seq1:
-        print (c,end=" ")
-    
-    print("",end="\n")
-
-    # print the remaining
-    for j in range(len(M[0])):
-        print (seq2[j],end=" ")
-        for i in range(len(M)):
-            print (M[i][j], end=" ")
-        print("",end="\n")
-
-####################
-#### PARAMETERS ####
-####################
-
-class Parameters:
-    def __init__(self, gap=-2,mismatch=-1,match=1):
-        self.gap = gap
-        self.mismatch = mismatch
-        self.match= match
-
-    def score(self, a, b):
-        assert len(a) == len(b) == 1 #assures that is just one letter
-
-        if a==b:
-            return self.match
-        else:
-            return self.mismatch
-
-    def __str__(self):
-        return "match = {}\nmismatch = {}\ngap = {}\n".format(
-                self.match, self.mismatch, self.gap
-        )
-
+from util.alignment import Alignment
+from util.alignment import Parameters
+from util import io
+from util.matrices import create_matrix
 ########################
 #### LOCAL ALIGNMENT ####
 ########################
@@ -97,19 +35,12 @@ def local_align(seq1, seq2, Parameters=Parameters()):
                 li = i
                 lj = j
 
-    print ("Parameters\n{}".format(str(Parameters)))
-    print ("Score = {}".format(score))
-    print ("Location in the matrix = {},{}".format(li,lj))
-    # just putting an * in the location
-    #M[li][lj] = "*"+str(M[li][lj])
-    print ("Matrix =")
-    print_matrix("_"+seq1, "_"+seq2, M)
 
     return M, li, lj
 
 
 
-def align(M,seq1,seq2,i,j,Parameters):
+def traceback(M,seq1,seq2,i,j,Parameters):
     """
     Esta funcao encontra o melhor aliamente seguindo o algoritmo a seguir:
 
@@ -193,25 +124,18 @@ def align(M,seq1,seq2,i,j,Parameters):
 
 if __name__ == '__main__':
 
+    #Definicoes dos parametros
+    par = Parameters(gap=-10,matrix='DNAFULL',stype='dna')
 
-    par = Parameters()
-
-    #>tr|B7Z8R9|B7Z8R9_HUMAN cDNA FLJ57474, highly similar to Homo sapiens plasticity
-    # related gene 3 (PRG-3), transcript variant 1, mRNA OS=Homo sapiens PE=2 SV=1
-    a = "MAGTVLLAYYFECTDTFQVHIQGFFCQDGDLMKPYPGTEEESFITPLVLYCVLAATPTAI\
-    IFIGEISMYFIKSTRESLIAQEKTILTGECCYLNPLLRRIIRFTGVFAFGLFATDIFVNA\
-    GQVVTGHLTPYFLTVCKPNYTSADCQAHHQFINNGNICTGDLEVIEKARRSFPSKHAALS\
-    IYSALYATMYITSTIKTKSSRLAKPVLCLGTLCTAFLTGLNRVSEYRNHCSDVIAGFILG\
-    TAVALFLGMCVVHNFKGTQGSPSKPKPEDPRGVPLMAFPRIESPLETLSAQNHSASMTEVT"
     
+    seq1=io.read_fasta(io.read_file("../inputs/NM_002688.fasta"))
+    seq2=io.read_fasta(io.read_file("../inputs/XM_001166286.fasta"))
     
-    #>sp|Q9Y2Y8|PRG3_HUMAN Proteoglycan 3 OS=Homo sapiens GN=PRG3 PE=1 SV=2
-    b = "MQCLLLLPFLLLGTVSALHLENDAPHLESLETQADLGQDLDSSKEQERDLALTEEVIQAE\
-    GEEVKASACQDNFEDEEAMESDPAALDKDFQCPREEDIVEVQGSPRCKICRYLLVRTPKT\
-    FAEAQNVCSRCYGGNLVSIHDFNFNYRIQCCTSTVNQAQVWIGGNLRGWFLWKRFCWTDG\
-    SHWNFAYWSPGQPGNGQGSCVALCTKGGYWRRAQCDKQLPFVCSF"
+    matrix, i, j = local_align(seq1, seq2, par)
 
-    matrix, i, j = local_align(a,b,par)
-    alignedseq1, alignedseq2 = align(matrix,a,b,i,j,par)
-    print(alignedseq1)
-    print(alignedseq2)
+    alignedseq1, alignedseq2 = traceback(matrix, seq1, seq2, i, j, par)
+
+    result = Alignment(alignedseq1,alignedseq2, "DEFAULT")
+    result.calculate_mat_mis_gaps()
+
+    io.write_file("../outputs/locally_local_linear_output.txt",str(result))

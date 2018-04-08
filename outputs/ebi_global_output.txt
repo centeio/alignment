@@ -1,4 +1,5 @@
-[ALIGNMENT] 
+
+[ALIGNMENT DEFAULT] 
         SEQ1: ---CLF- 
         SEQ2: AAACLFF 
         #gaps: 4 	 #matches: 3 	 #mismatches: 0

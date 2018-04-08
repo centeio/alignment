@@ -7,6 +7,12 @@ def write_file(path,data):
     f.write(str(data))
     f.close()
 
+def append_file(path,data):
+    filename = os.path.join(fileDir, path)
+    f = open(filename, 'a')
+    f.write(str(data))
+    f.close()
+
 def read_file(path):
     filename = os.path.join(fileDir, path)
     f = open(filename, 'r+')
