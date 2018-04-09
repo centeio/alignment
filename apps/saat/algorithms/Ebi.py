@@ -13,8 +13,10 @@ alignment algorithm
 
 
 #EBI URLS
-EBI_RUN_URL = "http://www.ebi.ac.uk/Tools/services/rest/emboss_needle/run/"
-EBI_RESULT_URL = "http://www.ebi.ac.uk/Tools/services/rest/emboss_needle/result/"
+EBI_NEEDLE_RUN_URL = "http://www.ebi.ac.uk/Tools/services/rest/emboss_needle/run/"
+EBI_NEEDLE_RESULT_URL = "http://www.ebi.ac.uk/Tools/services/rest/emboss_needle/result/"
+EBI_WATER_RUN_URL = "http://www.ebi.ac.uk/Tools/services/rest/emboss_water/run/"
+EBI_WATER_RESULT_URL = "http://www.ebi.ac.uk/Tools/services/rest/emboss_water/result/"
 REGEX = "(?<=\d )[AGVLYETDFQHICSMKPRNW\-]{1,50}"
 
 #EXAMPLE OF REQUEST
@@ -33,17 +35,27 @@ data = {"email":"up201711183@fc.up.pt",
     
 
 class Ebi():
-
-    type_dict = {
-        1:"protein",
-        2:"dna"
-    }
-
-    matrix_dict = {
-        1:"EBLOSUM62",
-        2:"EPAM250",
-        3:"EDNAFULL"
-    }
+    def __init__(self,type="GLOBAL"):
+        self.req_dict = {
+            "LOCAL":EBI_WATER_RUN_URL,
+            "GLOBAL":EBI_NEEDLE_RUN_URL
+        }
+        self.result_dict = {
+            "LOCAL":EBI_WATER_RESULT_URL,
+            "GLOBAL":EBI_NEEDLE_RESULT_URL
+        }
+        self.request_url = self.req_dict[type]
+        self.result_url = self.result_dict[type]
+        self.type_dict = {
+            1:"protein",
+            2:"dna"
+        }
+        self.matrix_dict = {
+            1:"EBLOSUM62",
+            2:"EPAM250",
+            3:"EDNAFULL"
+        }
+        
 
     def run(self, seq1, seq2, seqtype, matrix, gapopen, gapext):
         #CONFIG
@@ -59,21 +71,21 @@ class Ebi():
         
 
         # RUN
-        LOG.info("[{0}] Requesting the URL = {1}...".format(datetime.now(),EBI_RUN_URL))
-        r = requests.post(EBI_RUN_URL,data)
+        LOG.info("[{0}] Requesting the URL = {1}...".format(datetime.now(),self.request_url))
+        r = requests.post(self.request_url,data)
         LOG.info("[{0}] Request made and the code returned was {1}".format(datetime.now(),r.status_code))
         print ("Nome do job gerado = {}".format(r.text))
 
         #RESULT
         # LOG.info("[{0}] Requesting the URL = {1}...".format(datetime.now(),EBI_RESULT_URL))
         #Addind the jobid
-        result = requests.get(EBI_RESULT_URL+"{jobID}/aln".format(jobID=r.text))
+        result = requests.get(self.result_url+"{jobID}/aln".format(jobID=r.text))
         
         #Trying again until 200 is returned
         while (result.status_code is not 200):
             # LOG.info("[{0}] Result not ready yet...".format(datetime.now()))
             # LOG.info("[{0}] Requesting the URL = {1}...".format(datetime.now(),EBI_RESULT_URL))
-            result = requests.get(EBI_RESULT_URL+"{jobID}/aln".format(jobID=r.text))
+            result = requests.get(self.result_url+"{jobID}/aln".format(jobID=r.text))
         
         LOG.info("[{0}] Results got = {1}...".format(datetime.now(),result.text))
 

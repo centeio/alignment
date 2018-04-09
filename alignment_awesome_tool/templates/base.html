@@ -28,16 +28,10 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
-        <li {% if "/" == request.path %}class="nav-item active" {% else  %} class="nav-item" {% endif%}>
-          <a class="nav-link" href="/">Global (affine)
+        <li {% if "/" == request.path or "global" in request.path %}class="nav-item active" {% else  %} class="nav-item" {% endif%}>
+          <a class="nav-link" href="/global/">Global
             <span class="sr-only">(current)</span>
           </a>
-          </li>
-          <li {% if "globallinear" in request.path %}class="nav-item active" {% else  %} class="nav-item" {% endif%}>
-            <a class="nav-link" href="/globallinear/">Global (linear)</a>
-          </li>
-          <li {% if "globalmultiples" in request.path %}class="nav-item active" {% else  %} class="nav-item" {% endif%}>
-            <a class="nav-link" href="/globalmultiples/">2 Alignments</a>
           </li>
           <li {% if "local" in request.path %}class="nav-item active" {% else  %} class="nav-item" {% endif%}>
             <a class="nav-link" href="/local/">Local</a>
